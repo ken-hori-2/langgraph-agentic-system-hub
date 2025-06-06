@@ -5,9 +5,28 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  
   # APIコスト削減のため定期実行は一時的に無効化
   # schedule:
   #   - cron: '0 0 * * *'  # 毎日深夜に実行
+  
+  workflow_dispatch:  # 手動実行を有効化
+    inputs:
+      run_tests:
+        description: 'Run tests'
+        required: true
+        default: true
+        type: boolean
+      run_build:
+        description: 'Run build'
+        required: true
+        default: true
+        type: boolean
+      run_deploy:
+        description: 'Run deploy'
+        required: true
+        default: false
+        type: boolean
 
 env:
   DOCKER_IMAGE: langgraph-agentic-system-test
@@ -19,8 +38,9 @@ env:
   SPOTIFY_TOKEN: ${{ secrets.SPOTIFY_TOKEN }}
 
 jobs:
-  test:
+  test-and-build:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' && (inputs.run_tests || inputs.run_build) || github.event_name != 'workflow_dispatch' }}
     
     steps:
     - uses: actions/checkout@v4
@@ -31,77 +51,37 @@ jobs:
     - name: Build Docker image
       uses: docker/build-push-action@v5
       with:
-        context: .
+        context: ${{ github.workspace }}
+        file: ./Dockerfile
         load: true
         tags: ${{ env.DOCKER_IMAGE }}:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
     
-    - name: Run MCP Server Tests
+    - name: Run tests in Docker
       run: |
         docker run --rm \
           -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
           -e TAVILY_API_KEY=${{ secrets.TAVILY_API_KEY }} \
           -e SPOTIFY_USER_ID=${{ secrets.SPOTIFY_USER_ID }} \
           -e SPOTIFY_TOKEN=${{ secrets.SPOTIFY_TOKEN }} \
-          ${{ env.DOCKER_IMAGE }}:latest tests/test_mcp_server_spotify.py tests/test_mcp_server_search.py tests/test_mcp_server_time.py
-        
-    - name: Run Planner Agent Tests
-      run: |
-        docker run --rm \
-          -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
-          -e TAVILY_API_KEY=${{ secrets.TAVILY_API_KEY }} \
-          -e SPOTIFY_USER_ID=${{ secrets.SPOTIFY_USER_ID }} \
-          -e SPOTIFY_TOKEN=${{ secrets.SPOTIFY_TOKEN }} \
-          ${{ env.DOCKER_IMAGE }}:latest tests/test_planner_agent.py
-        
-    - name: Run Integration Tests
-      run: |
-        docker run --rm \
-          -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
-          -e TAVILY_API_KEY=${{ secrets.TAVILY_API_KEY }} \
-          -e SPOTIFY_USER_ID=${{ secrets.SPOTIFY_USER_ID }} \
-          -e SPOTIFY_TOKEN=${{ secrets.SPOTIFY_TOKEN }} \
-          ${{ env.DOCKER_IMAGE }}:latest tests/test_integration.py
-        
+          ${{ env.DOCKER_IMAGE }}:latest pytest tests/ -v --cov=src --cov-report=xml
+    
     - name: Upload coverage report
       uses: codecov/codecov-action@v4
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-    
-    - name: Build Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        load: true
-        tags: ${{ env.DOCKER_IMAGE }}:latest
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-        
-    - name: Build
-      run: |
-        # ビルドコマンドをここに追加
-        echo "Building project..."
+        files: ./coverage.xml
         
   deploy:
-    needs: build
+    needs: test-and-build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_deploy || github.ref == 'refs/heads/main' }}
     
     steps:
     - uses: actions/checkout@v4
     
     - name: Deploy
       run: |
-        # デプロイコマンドをここに追加
-        echo "Deploying project..." 
+        echo "Deploying project..."
+        # デプロイコマンドをここに追加 
