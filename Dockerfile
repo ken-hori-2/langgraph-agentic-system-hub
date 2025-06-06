@@ -12,8 +12,10 @@ RUN pip install --no-cache-dir -r requirements.txt \
 COPY ./src ./src
 COPY ./tests ./tests
 
-# テスト実行
+# テスト実行（全体）
 RUN pytest tests/ -v
+# モックテストのみ実行できるように追加
+RUN pytest tests/test_mock_planner_agent.py -v
 
 # 本番用ステージ
 FROM python:3.10-slim
