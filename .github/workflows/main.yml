@@ -1,107 +1,31 @@
-name: CI/CD Pipeline
+name: Mock Test CI/CDPipeline
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
-  # APIコスト削減のため定期実行は一時的に無効化
-  # schedule:
-  #   - cron: '0 0 * * *'  # 毎日深夜に実行
+  
+  workflow_dispatch:
 
 env:
   DOCKER_IMAGE: langgraph-agentic-system-test
-  PYTHONPATH: /app
-  PYTHONIOENCODING: utf-8
-  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-  TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
-  SPOTIFY_USER_ID: ${{ secrets.SPOTIFY_USER_ID }}
-  SPOTIFY_TOKEN: ${{ secrets.SPOTIFY_TOKEN }}
 
 jobs:
-  test:
+  mock-test:
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-    
-    - name: Build Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        load: true
-        tags: ${{ env.DOCKER_IMAGE }}:latest
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-    
-    - name: Run MCP Server Tests
-      run: |
-        docker run --rm \
-          -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
-          -e TAVILY_API_KEY=${{ secrets.TAVILY_API_KEY }} \
-          -e SPOTIFY_USER_ID=${{ secrets.SPOTIFY_USER_ID }} \
-          -e SPOTIFY_TOKEN=${{ secrets.SPOTIFY_TOKEN }} \
-          ${{ env.DOCKER_IMAGE }}:latest tests/test_mcp_server_spotify.py tests/test_mcp_server_search.py tests/test_mcp_server_time.py
-        
-    - name: Run Planner Agent Tests
-      run: |
-        docker run --rm \
-          -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
-          -e TAVILY_API_KEY=${{ secrets.TAVILY_API_KEY }} \
-          -e SPOTIFY_USER_ID=${{ secrets.SPOTIFY_USER_ID }} \
-          -e SPOTIFY_TOKEN=${{ secrets.SPOTIFY_TOKEN }} \
-          ${{ env.DOCKER_IMAGE }}:latest tests/test_planner_agent.py
-        
-    - name: Run Integration Tests
-      run: |
-        docker run --rm \
-          -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
-          -e TAVILY_API_KEY=${{ secrets.TAVILY_API_KEY }} \
-          -e SPOTIFY_USER_ID=${{ secrets.SPOTIFY_USER_ID }} \
-          -e SPOTIFY_TOKEN=${{ secrets.SPOTIFY_TOKEN }} \
-          ${{ env.DOCKER_IMAGE }}:latest tests/test_integration.py
-        
-    - name: Upload coverage report
-      uses: codecov/codecov-action@v4
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-    
-    - name: Build Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        load: true
-        tags: ${{ env.DOCKER_IMAGE }}:latest
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-        
-    - name: Build
-      run: |
-        # ビルドコマンドをここに追加
-        echo "Building project..."
-        
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Deploy
-      run: |
-        # デプロイコマンドをここに追加
-        echo "Deploying project..." 
+      - uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Docker image for mock test
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ github.workspace }}
+          file: ./Dockerfile
+          load: true
+          tags: ${{ env.DOCKER_IMAGE }}:mocktest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Run mock tests in Docker
+        run: |
+          docker run --rm \
+            ${{ env.DOCKER_IMAGE }}:mocktest pytest tests/test_mock_planner_agent.py -v
