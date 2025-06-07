@@ -18,64 +18,45 @@ It is designed to support:
 ---
 
 ## 🏗️ Project Structure
-<!--
-langgraph-agentic-system-hub/
-├── README.md
-├── requirements.txt
-├── main.py
-├── /agents
-│   ├── orchestrator.py         # Routes tasks to the appropriate agent
-│   ├── music_agent.py
-│   ├── event_agent.py
-│   └── weather_agent.py
-├── /tools
-│   ├── spotify_mcp.py          # MCP server for Spotify search
-│   ├── weather_mcp.py          # MCP server for weather info
-│   ├── map_search_mcp.py       # Google Maps, HotPepper, Tabelog
-│   └── calendar_mcp.py         # Google Calendar/Todo (future)
-├── /graphs
-│   └── planner_graph.py        # LangGraph workflow (multi-agent)
-├── /tests
-│   └── test_spotify_mcp.py
--->
 
 ```txt
 langgraph-agentic-system-hub/
-├── README.md                  # このプロジェクトのドキュメント
-├── requirements.txt           # 依存ライブラリ一覧
-├── main.py                    # アプリのエントリーポイント
+├── README.md                  # Project documentation
+├── requirements.txt           # Dependency list
+├── main.py                    # Application entry point
 │
-├── agents/                    # 各エージェントのLangGraphノード処理
-│   ├── orchestrator.py        # タスクを適切なエージェントに振り分ける中核エージェント
-│   ├── music_agent.py         # Spotifyなど音楽系の処理を担うエージェント
-│   ├── event_agent.py         # 飲み会や週末スポット提案用のエージェント
-│   └── weather_agent.py       # 天気情報を取得するエージェント
+├── agents/                    # LangGraph node logic for each agent
+│   ├── orchestrator.py        # Central agent for task routing
+│   ├── music_agent.py         # Agent for music-related tasks (Spotify, etc.)
+│   ├── event_agent.py         # Agent for party/outing suggestions
+│   └── weather_agent.py       # Agent for weather information
 │
-├── tools/                     # 各種外部ツール（FastMCP）との連携サーバー
-│   ├── spotify_mcp.py         # Spotify楽曲検索用 MCP サーバー
-│   ├── weather_mcp.py         # 天気API取得用 MCP サーバー
-│   ├── map_search_mcp.py      # Google Maps / HotPepper / 食べログ連携（飲み会検索）
-│   └── calendar_mcp.py        # Google Calendar / TODO管理（今後追加予定）
+├── tools/                     # MCP servers for external tools (FastMCP)
+│   ├── spotify_mcp.py         # MCP server for Spotify search
+│   ├── weather_mcp.py         # MCP server for weather info
+│   ├── map_search_mcp.py      # Google Maps / HotPepper / Tabelog integration
+│   └── calendar_mcp.py        # Google Calendar / TODO management (planned)
 │
-├── graphs/                    # LangGraph フロー定義
-│   └── planner_graph.py       # マルチエージェント連携ワークフローの定義
+├── graphs/                    # LangGraph workflow definitions
+│   └── planner_graph.py       # Multi-agent workflow definition
 │
-├── memory/                    # LangChain Memory 機能（会話履歴保持）
-│   └── memory_config.py       # 記憶の保存/復元の定義（例：ChatMessageHistory）
+├── memory/                    # LangChain Memory (conversation history)
+│   └── memory_config.py       # Memory save/restore logic (e.g. ChatMessageHistory)
 │
-├── ui/                        # ユーザーインターフェース（例：Gradioなど）
-│   └── web_ui.py              # Webベースの対話インターフェース（開発中）
+├── ui/                        # User interface (e.g. Gradio)
+│   └── web_ui.py              # Web-based chat UI (in development)
 │
-├── tests/                     # ツールやエージェントの動作確認用テスト
-│   └── test_spotify_mcp.py    # Spotify MCP の動作テスト
+├── tests/                     # Tests for tools and agents
+│   └── test_spotify_mcp.py    # Spotify MCP test
 │
-└── docs/                      # アーキテクチャ設計資料やユースケースまとめ
-    └── architecture.png       # 全体構成図やフロー図など
+└── docs/                      # Architecture docs and use cases
+    └── architecture.png       # Diagrams, flowcharts, etc.
 ```
 
 ---
 
 ## 🔧 Requirements
+
 ```txt
 langchain
 langgraph
@@ -88,20 +69,10 @@ aiohttp
 gradio
 ```
 
-<!--
-## 🗂️ `requirements.txt` 例（ベース）
-```txt
-langgraph
-mcp
-openai
-spotipy
-python-dotenv
-fastapi
-uvicorn
-aiohttp
+You can install all dependencies at once with:
+```bash
+pip install -r requirements.txt
 ```
--->
-pip install -r requirements.txt で一括インストールできます。
 
 ## 🚀 Getting Started
 
@@ -112,7 +83,7 @@ git clone https://github.com/kenji/langgraph-agentic-system-hub.git
 cd langgraph-agentic-system-hub
 pip install -r requirements.txt
 ```
-<!-- ## 📦 How to Run -->
+
 ### 2. Run a tool MCP server
 ```bash
 python tools/spotify_mcp.py
@@ -125,60 +96,48 @@ python tools/weather_mcp.py
 python main.py
 ```
 
-### 4. Gradio UIを起動（今後追加）
+### 4. Launch the Gradio UI (coming soon)
 ```bash
 python ui/web_ui.py
 ```
 
 ## 🧩 Agentic Workflow Example
+
 ```txt
-User: 「週末に行けそうな場所を探して」
-→ Orchestrator: "PlannerAgent" へルーティング
-→ PlannerAgent: Web検索用MCPを利用
-→ Google Maps MCP + HotPepper MCP から情報取得
-→ 結果をLangGraph経由でユーザーに返す
+User: "Find a place to go this weekend"
+→ Orchestrator: routes to "PlannerAgent"
+→ PlannerAgent: uses web search MCP
+→ Gets info from Google Maps MCP + HotPepper MCP
+→ Returns results to user via LangGraph
 ```
 
 ## 🔮 Future Plans
+
 - 🧠 Memory integration with LangChain memory
 - 🔍 RAG (Retrieval-Augmented Generation) for dynamic search
-- 📆 Google Calendar連携で予定の自動調整
-- 📎 Notionへの自動まとめ機能
-- 🎤 YouTube音源分離ツールとの連携
-- 💬 Agent毎の専門プロンプト最適化
-- 🗺️ LangGraph SDK による視覚的ワークフロー生成
-
-<!--
-## 🔮 Future Extensions
-- 💬 LangChain Memory によるチャット履歴の保持
-- 🔍 RAG によるリアルタイムWeb検索（ニュース、週末スポットなど）
-- 🧠 Agent毎の専門プロンプト最適化
-- 🗺️ LangGraph SDK による視覚的ワークフロー生成
--->
+- 📆 Google Calendar integration for automatic scheduling
+- 📎 Notion auto-summary feature
+- 🎤 Integration with YouTube audio separation tools
+- 💬 Prompt optimization for each agent
+- 🗺️ Visual workflow generation with LangGraph SDK
 
 ## ✨ Example Use Cases
-| ユースケース       | 概要                                                                 |
-|--------------------|----------------------------------------------------------------------|
-| 🎵 音楽検索         | ユーザーの希望に応じて Spotify から楽曲検索・推薦を行います。              |
-| 🍺 飲み会番長       | 人数・日付・エリアに基づいて、良いお店を探して空席状況をチェックします。     |
-| 🌤 天気確認         | 現在地や指定されたエリアの天気情報を取得し、アドバイスを提供します。         |
-| 📆 タスク管理       | Google Calendar と連携して、予定の確認や ToDo リストの管理を行います。       |
-| 📍 お出かけ提案     | 人気の週末スポットやレビューを取得して、行き先をおすすめします。             |
+
+| Use Case         | Description                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| 🎵 Music Search  | Search and recommend songs from Spotify based on user requests.              |
+| 🍺 Party Finder  | Find good venues and check availability based on number, date, and area.     |
+| 🌤 Weather Info  | Get weather information for current or specified locations and provide advice.|
+| 📆 Task Manager  | Manage schedules and ToDo lists via Google Calendar integration.             |
+| 📍 Outing Ideas  | Suggest popular weekend spots and get reviews.                               |
 
 ## 👤 Author
+
 **Centaurus-Ken（[@ken-hori-2](https://github.com/ken-hori-2)）**
 
-LangGraph × MCP による Agentic AI システムの実験・開発を行う開発者。  
-普段は「こんなアプリがあったらいいな」という日常の願望を起点に、Agentic AI のコンセプト立案からマルチエージェント構成でのデモ開発・プレゼンまで幅広く担当。
-また、センシングデバイス上で動作するエッジ AI モデルの設計・構築、デモ開発にも従事しており、CI/CD パイプラインの構築やテスト自動化の経験も保有。
-今後はさらに多様なユースケース（音楽、天気、飲み会、予定管理など）に対応する Agentic AI Hub としての機能拡張を目指しています。
-
-<!--
-Author
-Centaurus-Ken（@ken-hori-2）
-LangGraph + MCP による Agentic AI 実験者。
-今後さらに多くのユースケースに対応予定です。
--->
+A developer experimenting with Agentic AI systems using LangGraph × MCP.  
+From ideation to demo development and presentation, focusing on real-world use cases like music, weather, party planning, and schedule management.  
+Also experienced in edge AI model design, demo development, and CI/CD pipeline automation.
 
 ## 📄 License
 
@@ -187,3 +146,48 @@ MIT License.
 Created by Centaurus-Ken for exploring next-gen LLM applications with modular tool orchestration.
 
 ---
+
+## Appendix: FastAPI + Uvicorn MCP Agent API Example
+
+This repository also includes a sample implementation of an MCP agent API using FastAPI and Uvicorn.
+
+### Directory Structure
+
+```
+src/uv_agent_api/
+  ├── uv_api_agent.py   # Agent core (LangGraph/LLM/Tool definitions)
+  ├── uv_api_main.py    # FastAPI server launcher
+  └── uv_api_client.py  # API client (for sending requests)
+```
+
+### 1. Start the Server
+
+```bash
+cd src/uv_agent_api
+uvicorn uv_api_main:app --reload --port 8001
+```
+
+### 2. Example: Using the Client
+
+In another terminal:
+
+```bash
+cd src/uv_agent_api
+python uv_api_client.py
+```
+
+- You can interact with the AI agent in a chat format.
+- Type `quit` or `exit` to end the session.
+
+### 3. API Endpoints
+
+- `POST /ask` : Send a question and get the AI agent's response
+- `GET /history` : Retrieve conversation history
+- `DELETE /history` : Clear conversation history
+
+### 4. Notes
+- `uv_api_agent.py` … Defines LangGraph/LLM/Tools/conversation memory and the agent core
+- `uv_api_main.py` … FastAPI server endpoint definitions
+- `uv_api_client.py` … Client for sending requests to the server
+
+If you need to use API keys or connect to external services, please refer to the comments and environment variable settings in each script. 
