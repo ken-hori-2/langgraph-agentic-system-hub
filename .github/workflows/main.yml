@@ -1,10 +1,13 @@
-name: Mock Test CI/CDPipeline
+name: Mock Test CI/CD Pipeline
 
 on:
-  pull_request:
+  pull_request: # プルリクエスト(マージするブランチ)をトリガー # "mainブランチに対するプルリクエストが作成・更新されたとき" にワークフローが実行される
     branches: [ main ]
   
-  workflow_dispatch:
+  pull_request_target: # マージ先のブランチをトリガー # "mainブランチがマージ先となるPRのイベント（例：外部リポジトリからのPR）" でワークフローが実行される
+    branches: [ main ]
+  
+  workflow_dispatch: # 手動トリガー
 
 env:
   DOCKER_IMAGE: langgraph-agentic-system-test
