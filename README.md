@@ -58,15 +58,39 @@ langgraph-agentic-system-hub/
 ## 🔧 Requirements
 
 ```txt
-langchain
-langgraph
-openai
-mcp
-fastapi
-spotipy
-python-dotenv
-aiohttp
-gradio
+# LangChain Related
+langchain==0.3.13
+langchain-community==0.3.13
+langchain-core==0.3.40
+langchain-google-community==2.0.3
+langchain-google-genai==2.0.11
+langchain-openai==0.2.6
+langchain-text-splitters==0.3.4
+langgraph==0.2.45
+
+# LLM Related
+openai==1.54.3
+anthropic==0.52.1
+google-ai-generativelanguage==0.6.16
+
+# Data Processing & Analysis
+pandas==2.2.3
+numpy==1.26.4
+scikit-learn==1.6.1
+scipy==1.15.2
+
+# Web Related
+fastapi==0.115.11
+uvicorn==0.34.0
+streamlit==1.45.1
+flask==3.1.0
+flask-cors==5.0.1
+
+# Utilities
+python-dotenv==1.0.1
+pydantic==2.9.2
+pydantic-settings==2.7.0
+tqdm==4.67.0
 ```
 
 You can install all dependencies at once with:
@@ -86,14 +110,16 @@ pip install -r requirements.txt
 
 ### 2. Run a tool MCP server
 ```bash
-python tools/spotify_mcp.py
+python src/tools/mcp_server_spotify.py
 # or
-python tools/weather_mcp.py
+python src/tools/mcp_server_time.py
+# or
+python src/tools/mcp_server_search.py
 ```
 
 ### 3. Run the LangGraph agent
 ```bash
-python main.py
+python src/planner_agent.py
 ```
 
 ### 4. Launch the Gradio UI (coming soon)

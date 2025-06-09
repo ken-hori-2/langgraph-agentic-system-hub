@@ -20,7 +20,7 @@ async def main():
         {
             "spotify": {
                 "command": "python",
-                "args": ["mcp_server_spotify.py"],
+                "args": ["tools/mcp_server_spotify.py"],
                 "env": {
                     "SPOTIFY_USER_ID": os.getenv("SPOTIFY_USER_ID"),
                     "SPOTIFY_TOKEN": os.getenv("SPOTIFY_TOKEN"),
@@ -30,7 +30,7 @@ async def main():
             },
             "tavily": {
                 "command": "python",
-                "args": ["mcp_server_search.py"],
+                "args": ["tools/mcp_server_search.py"],
                 "env": {
                     "TAVILY_API_KEY": os.getenv("TAVILY_API_KEY"),
                     "PYTHONIOENCODING": "utf-8"
@@ -39,7 +39,7 @@ async def main():
             },
             "time": {
                 "command": "python",
-                "args": ["mcp_server_time.py"],
+                "args": ["tools/mcp_server_time.py"],
                 "env": {
                     "PYTHONIOENCODING": "utf-8"
                 },
