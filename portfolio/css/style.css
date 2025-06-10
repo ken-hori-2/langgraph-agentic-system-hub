@@ -1,0 +1,86 @@
+.profile-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.section {
+    padding: 80px 0;
+}
+
+.tech-stack-icon {
+    font-size: 2rem;
+    margin: 10px;
+}
+
+.project-card {
+    transition: transform 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+/* ナビゲーションバーのスタイル */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* セクションの背景色 */
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+/* カードのスタイル */
+.card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.card-title {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* ボタンのスタイル */
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+/* フォームのスタイル */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52,152,219,0.25);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .section {
+        padding: 40px 0;
+    }
+    
+    .tech-stack-icon {
+        font-size: 1.5rem;
+        margin: 5px;
+    }
+} 
