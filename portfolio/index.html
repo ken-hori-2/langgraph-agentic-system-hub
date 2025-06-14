@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centaurus-ken's Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+    body {
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        background: #f6f7fb;
+        color: #222;
+    }
+    .section-title, h2.text-center {
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+    .section-title::after, h2.text-center::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%);
+        margin: 0.5rem auto 0;
+        border-radius: 2px;
+    }
+    .card.project-card {
+        border-radius: 1.5rem;
+        box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+        border: none;
+        background: #fff;
+        transition: transform 0.2s, box-shadow 0.2s;
+        overflow: hidden;
+    }
+    .card.project-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 8px 32px 0 rgba(0,0,0,0.14);
+    }
+    .card-img-top {
+        height: 170px;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 1.5rem 1.5rem 0 0;
+        box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+    }
+    .card-title {
+        font-weight: 700;
+        font-size: 1.15rem;
+        margin-bottom: 0.5rem;
+    }
+    .card-text {
+        font-size: 0.98rem;
+        color: #444;
+    }
+    .card-footer {
+        background: none;
+        border: none;
+        padding: 0;
+    }
+    .btn.btn-primary {
+        font-size: 0.85em;
+        padding: 0.4em 1.2em;
+        border-radius: 1.5em;
+        background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%);
+        border: none;
+        font-weight: 600;
+        box-shadow: 0 2px 8px 0 rgba(0,123,255,0.08);
+        transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn.btn-primary:hover {
+        background: linear-gradient(90deg, #0056b3 0%, #00aaff 100%);
+        box-shadow: 0 4px 16px 0 rgba(0,123,255,0.16);
+    }
+    .badge-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em;
+        margin-top: 0.5em;
+    }
+    .badge {
+        font-size: 0.75em;
+        padding: 0.3em 0.9em;
+        font-weight: 500;
+        border-radius: 1em;
+        background: #f0f4fa;
+        color: #222;
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.04);
+        border: none;
+        letter-spacing: 0.01em;
+    }
+    .badge.bg-primary { background: #e3f0ff; color: #007bff; }
+    .badge.bg-info { background: #e0f7fa; color: #00bcd4; }
+    .badge.bg-success { background: #e6f9f0; color: #00b894; }
+    .badge.bg-warning { background: #fff8e1; color: #ffb300; }
+
+    .modal-content {
+        border-radius: 1.5rem;
+        box-shadow: 0 8px 32px 0 rgba(0,0,0,0.16);
+        background: #fff;
+        padding: 2.5rem 2rem;
+    }
+    .modal-header {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    .modal-title {
+        font-weight: 700;
+        font-size: 1.4rem;
+    }
+    .modal-project-image {
+        max-width: 320px;
+        max-height: 160px;
+        width: 100%;
+        object-fit: cover;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1.5rem;
+        border-radius: 1.2rem;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+    }
+    .project-detail h4 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-top: 1.2em;
+        margin-bottom: 0.5em;
+        color: #007bff;
+        display: flex;
+        align-items: center;
+        gap: 0.4em;
+    }
+    .project-detail ul {
+        margin-bottom: 1em;
+    }
+
+    @media (max-width: 768px) {
+        .card-img-top, .modal-project-image { height: 120px; max-height: 120px; }
+        .modal-content { padding: 1.2rem 0.5rem; }
+    }
+    </style>
+</head>
+<body>
+    <!-- ナビゲーションバー -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Centaurus-ken's Portfolio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- プロジェクトモーダル -->
+    <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="projectModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ヒーローセクション -->
+    <section class="section bg-light" id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center">
+                    <img src="images/profile.png" alt="Profile" class="profile-img mb-4">
+                </div>
+                <div class="col-md-8">
+                    <h1 class="display-4 mb-4">Centaurus-ken</h1>
+                    <p class="lead mb-4">AI/ML Engineer & Full Stack Developer</p>
+                    <div class="mb-4">
+                        <a href="https://github.com/ken-hori-2" class="btn btn-primary me-2"><i class="bi bi-github"></i> GitHub</a>
+                        <a href="https://www.linkedin.com/in/ken-hori-2" class="btn btn-info me-2"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                        <a href="https://twitter.com/ken_hori_2" class="btn btn-info me-2"><i class="bi bi-twitter"></i> Twitter</a>
+                        <a href="mailto:your.email@example.com" class="btn btn-success"><i class="bi bi-envelope"></i> Contact</a>
+                    </div>
+                    <div class="about-content">
+                        <div class="about-section mb-4">
+                            <h3 class="h5 mb-3"><i class="bi bi-lightning-charge-fill text-primary me-2"></i>現在の取り組み</h3>
+                            <p>AgenticAI × 常時センシングTWSによる"常時無意識コミュニケーション"のコンセプト立案からデモ開発まで担当。環境音や行動からユーザーの潜在意識下の文脈(状況)を理解し、パーソナライズされた体験を提供する次世代AIシステムの構築に取り組んでいます。</p>
+                            <p class="mt-3"><strong>LangGraph Agentic System Hub</strong>は、LangGraphとMCP（Model Context Protocol）ツールを活用したマルチエージェントLLMアプリケーションのための拡張性・モジュール性の高いフレームワークです。音楽検索、天気情報、飲み会会場検索、タスク管理など、日常の多様なユースケースに対応しています。</p>
+                        </div>
+                        <div class="about-section mb-4">
+                            <h3 class="h5 mb-3"><i class="bi bi-cpu-fill text-primary me-2"></i>技術スタック・開発スタイル</h3>
+                            <ul class="mb-2">
+                                <li>LangGraph/LangChainによるエージェントオーケストレーション</li>
+                                <li>FastAPIやGradio、FlaskによるAPI・Web UI開発</li>
+                                <li>Docker・GitHub Actionsを活用したCI/CDパイプライン自動化</li>
+                                <li>MCP（Model Context Protocol）による外部ツール連携</li>
+                                <li>Python, PyTorch, TensorFlow, React, AWS, Git, Docker, CI/CD, Flask など幅広い技術</li>
+                            </ul>
+                            <p>CI/CD自動化にも注力しており、GitHub Actionsによる自動テスト・Dockerビルド・デプロイ、Pull Request時のMockテスト、Dockerfileによるマルチステージビルドなど、開発効率と品質向上を両立しています。</p>
+                        </div>
+                        <div class="about-section">
+                            <h3 class="h5 mb-3"><i class="bi bi-rocket-takeoff-fill text-primary me-2"></i>今後の展望</h3>
+                            <ul class="mb-2">
+                                <li>RAGやGoogle Calendar連携、Notion自動要約、YouTube音源分離など多様な拡張</li>
+                                <li>エッジAIやLLMの融合による新しい体験の創出</li>
+                                <li>より多様なユースケースに対応するAgentic AI Hubの実現</li>
+                            </ul>
+                            <p>AI技術を活用した革新的なソリューションの開発を通じて、体験した人の心が揺さぶられ、その人の考えや行動に影響を与えるような価値を提供したいと考えており、結果的に人々の生活をより豊かにできたら嬉しいです。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- スキルセクション -->
+    <section class="section" id="skills">
+        <div class="container">
+            <h2 class="text-center mb-5">Technical Skills</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">AI/ML</h5>
+                            <p class="card-text">
+                                <i class="bi bi-cpu tech-stack-icon"></i>
+                                <i class="bi bi-diagram-3 tech-stack-icon"></i>
+                                <i class="bi bi-graph-up tech-stack-icon"></i>
+                                <br>
+                                LangChain, LangGraph, OpenAI, Anthropic, Google AI
+                                <br>
+                                PyTorch, TensorFlow, NNabla
+                                <br>
+                                <small class="text-muted">マルチエージェント開発、LLMアプリケーション開発、エッジAI開発、ディープラーニング</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Backend & Languages</h5>
+                            <p class="card-text">
+                                <i class="bi bi-code-square tech-stack-icon"></i>
+                                <i class="bi bi-database tech-stack-icon"></i>
+                                <i class="bi bi-server tech-stack-icon"></i>
+                                <br>
+                                Python, FastAPI, Flask, Node.js, PostgreSQL
+                                <br>
+                                Kotlin, Java, C++, C
+                                <br>
+                                <small class="text-muted">RESTful API開発、マイクロサービスアーキテクチャ、データベース設計、システム開発</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Frontend & DevOps</h5>
+                            <p class="card-text">
+                                <i class="bi bi-git tech-stack-icon"></i>
+                                <i class="bi bi-docker tech-stack-icon"></i>
+                                <i class="bi bi-cloud tech-stack-icon"></i>
+                                <br>
+                                React, TypeScript, HTML5, CSS3
+                                <br>
+                                Git, Docker, AWS, CI/CD, MCP
+                                <br>
+                                <small class="text-muted">クラウドインフラ構築、コンテナ化、CI/CDパイプライン構築、フロントエンド開発</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- プロジェクトセクション -->
+    <section class="section bg-light" id="projects">
+        <div class="container">
+            <h2 class="text-center mb-5">Featured Projects</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card project-card h-100" data-project="langgraph">
+                        <img src="images/GenerativeAgents.png" class="card-img-top" alt="LangGraph Agentic System Hub">
+                        <div class="card-body">
+                            <h5 class="card-title">LangGraph Agentic System Hub</h5>
+                            <p class="card-text">
+                                LangChain/LangGraphフレームワークとAWSを用いたマルチエージェント開発とクラウドへのデプロイおよび自作API公開をしました。
+                            </p>
+                            <div class="card-footer mt-auto">
+                                <a href="https://github.com/ken-hori-2/langgraph-agentic-system-hub" class="btn btn-primary mb-2">詳細を見る</a>
+                                <div class="badge-group">
+                                    <span class="badge bg-primary">Python</span>
+                                    <span class="badge bg-info">LangGraph</span>
+                                    <span class="badge bg-success">FastAPI</span>
+                                    <span class="badge bg-warning">Docker</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card project-card h-100" data-project="edgeAI">
+                        <img src="images/SensingEdgeAI.png" class="card-img-top" alt="Edge AI Model Design">
+                        <div class="card-body">
+                            <h5 class="card-title">Sensing Edge AI Development</h5>
+                            <p class="card-text">
+                                PytorchやTFを用いた画像/環境音認識向けのエッジAI開発をしています。
+                            </p>
+                            <div class="card-footer mt-auto">
+                                <a href="#" class="btn btn-primary mb-2">詳細を見る</a>
+                                <div class="badge-group">
+                                    <span class="badge bg-primary">PyTorch</span>
+                                    <span class="badge bg-info">TensorFlow</span>
+                                    <span class="badge bg-success">ONNX</span>
+                                    <span class="badge bg-warning">Docker</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card project-card h-100" data-project="keiba">
+                        <img src="images/KeibaAI.png" class="card-img-top" alt="Horse Racing Prediction AI">
+                        <div class="card-body">
+                            <h5 class="card-title">Horse Racing Prediction AI</h5>
+                            <p class="card-text">
+                                データ取得や前処理からモデルの構築および運用まで意識した実装をしました。
+                            </p>
+                            <div class="card-footer mt-auto">
+                                <a href="#" class="btn btn-primary mb-2">詳細を見る</a>
+                                <div class="badge-group">
+                                    <span class="badge bg-primary">Python</span>
+                                    <span class="badge bg-info">scikit-learn</span>
+                                    <span class="badge bg-success">React</span>
+                                    <span class="badge bg-warning">FastAPI</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card project-card h-100" data-project="dataAnalysis">
+                        <img src="images/DataAnalysis.png" class="card-img-top" alt="Data Analysis">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Analysis (SIGNATE/Kaggle)</h5>
+                            <p class="card-text">
+                                データ分析を細々と続けています。
+                            </p>
+                            <div class="card-footer mt-auto">
+                                <a href="#" class="btn btn-primary mb-2">詳細を見る</a>
+                                <div class="badge-group">
+                                    <span class="badge bg-primary">Python</span>
+                                    <span class="badge bg-info">pandas</span>
+                                    <span class="badge bg-success">scikit-learn</span>
+                                    <span class="badge bg-warning">matplotlib</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- コンタクトセクション -->
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="text-center mb-5">Contact</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="text-center mb-4">
+                        <a href="https://github.com/ken-hori-2" class="btn btn-primary me-2"><i class="bi bi-github"></i> GitHub</a>
+                        <a href="https://www.linkedin.com/in/ken-hori-2" class="btn btn-info me-2"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                        <a href="https://twitter.com/ken_hori_2" class="btn btn-info me-2"><i class="bi bi-twitter"></i> Twitter</a>
+                        <a href="mailto:your.email@example.com" class="btn btn-success"><i class="bi bi-envelope"></i> Email</a>
+                    </div>
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="お名前">
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="メールアドレス">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="メッセージ"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">送信</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p class="mb-0">&copy; 2025 Centaurus-ken. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // プロジェクトデータ
+    const projectsData = {
+        langgraph: {
+            title: "LangGraph Agentic System Hub",
+            description: `
+                <div class="project-detail">
+                    <h4>概要</h4>
+                    <p>LangChain/LangGraphフレームワークとAWSを用いたマルチエージェント開発とクラウドへのデプロイおよび自作API公開を実装しました。</p>
+                    
+                    <h4>主な機能</h4>
+                    <ul>
+                        <li>マルチエージェントアーキテクチャの実装</li>
+                        <li>MCPツールとの統合</li>
+                        <li>FastAPIベースのAPIエンドポイント</li>
+                        <li>GradioベースのWeb UI</li>
+                    </ul>
+                    
+                    <h4>技術スタック</h4>
+                    <ul>
+                        <li>LangChain & LangGraph（エージェントオーケストレーション）</li>
+                        <li>FastAPI（RESTful API）</li>
+                        <li>Gradio（Webインターフェース）</li>
+                        <li>Docker（コンテナ化）</li>
+                    </ul>
+                    
+                    <h4>成果</h4>
+                    <ul>
+                        <li>複数のエージェントを効率的に連携させるシステムの構築</li>
+                        <li>スケーラブルなAPIエンドポイントの実装</li>
+                        <li>直感的なWebインターフェースの提供</li>
+                    </ul>
+                </div>
+            `,
+            image: "images/GenerativeAgents.png"
+        },
+        edgeAI: {
+            title: "Sensing Edge AI Development",
+            description: `
+                <div class="project-detail">
+                    <h4>概要</h4>
+                    <p>PyTorchやTensorFlowを用いた画像/環境音認識向けのエッジAI開発を実装しました。</p>
+                    
+                    <h4>主な機能</h4>
+                    <ul>
+                        <li>モデルの量子化と最適化</li>
+                        <li>エッジデバイスへのデプロイ</li>
+                        <li>パフォーマンスベンチマーク</li>
+                        <li>CI/CDパイプラインの自動化</li>
+                    </ul>
+                    
+                    <h4>技術スタック</h4>
+                    <ul>
+                        <li>PyTorch & TensorFlow（モデル開発）</li>
+                        <li>ONNX（モデル変換）</li>
+                        <li>Docker（コンテナ化）</li>
+                        <li>GitHub Actions（CI/CD）</li>
+                    </ul>
+                    
+                    <h4>成果</h4>
+                    <ul>
+                        <li>エッジデバイスでの高速な推論処理の実現</li>
+                        <li>モデルの最適化によるリソース使用量の削減</li>
+                        <li>自動化されたデプロイメントパイプラインの構築</li>
+                    </ul>
+                </div>
+            `,
+            image: "images/SensingEdgeAI.png"
+        },
+        keiba: {
+            title: "Horse Racing Prediction AI",
+            description: `
+                <div class="project-detail">
+                    <h4>概要</h4>
+                    <p>データ取得や前処理からモデルの構築および運用までを一貫して実装しました。</p>
+                    
+                    <h4>主な機能</h4>
+                    <ul>
+                        <li>競馬データの自動収集と前処理</li>
+                        <li>機械学習モデルの開発</li>
+                        <li>予測結果の可視化</li>
+                        <li>Webアプリケーションの開発</li>
+                    </ul>
+                    
+                    <h4>技術スタック</h4>
+                    <ul>
+                        <li>Python（データ処理）</li>
+                        <li>scikit-learn（機械学習）</li>
+                        <li>React（フロントエンド）</li>
+                        <li>FastAPI（バックエンド）</li>
+                    </ul>
+                    
+                    <h4>成果</h4>
+                    <ul>
+                        <li>高精度な予測モデルの開発</li>
+                        <li>リアルタイムデータ処理の実現</li>
+                        <li>ユーザーフレンドリーなインターフェースの提供</li>
+                    </ul>
+                </div>
+            `,
+            image: "images/KeibaAI.png"
+        },
+        dataAnalysis: {
+            title: "Data Analysis (SIGNATE/Kaggle)",
+            description: `
+                <div class="project-detail">
+                    <h4>概要</h4>
+                    <p>データ分析コンペティションへの参加を通じて、実践的なデータ分析スキルを磨いています。</p>
+                    
+                    <h4>主な活動</h4>
+                    <ul>
+                        <li>SIGNATE/Kaggleコンペティションへの参加</li>
+                        <li>データ分析と可視化</li>
+                        <li>機械学習モデルの開発</li>
+                        <li>分析結果のレポート作成</li>
+                    </ul>
+                    
+                    <h4>技術スタック</h4>
+                    <ul>
+                        <li>Python（データ分析）</li>
+                        <li>pandas（データ処理）</li>
+                        <li>scikit-learn（機械学習）</li>
+                        <li>matplotlib（可視化）</li>
+                    </ul>
+                    
+                    <h4>成果</h4>
+                    <ul>
+                        <li>複数のコンペティションでの上位入賞</li>
+                        <li>効果的なデータ可視化手法の確立</li>
+                        <li>再現性の高い分析パイプラインの構築</li>
+                    </ul>
+                </div>
+            `,
+            image: "images/DataAnalysis.png"
+        }
+    };
+
+    // モーダル関連の処理
+    document.addEventListener('DOMContentLoaded', function() {
+        const projectCards = document.querySelectorAll('.project-card');
+        const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+        const modalTitle = document.getElementById('projectModalLabel');
+        const modalContent = document.getElementById('modalContent');
+
+        projectCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const projectId = this.getAttribute('data-project');
+                const project = projectsData[projectId];
+                
+                if (project) {
+                    modalTitle.textContent = project.title;
+                    modalContent.innerHTML = `
+                        <img src="${project.image}" class="modal-project-image" alt="${project.title}">
+                        ${project.description}
+                    `;
+                    modal.show();
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html> 
