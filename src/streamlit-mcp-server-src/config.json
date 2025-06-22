@@ -1,0 +1,37 @@
+{
+  "get_current_time": {
+    "command": "python",
+    "args": [
+      "./mcp_server_time.py"
+    ],
+    "transport": "stdio"
+  },
+  "tavily_search": {
+    "command": "python",
+    "args": [
+      "./mcp_server_search.py"
+    ],
+    "transport": "stdio"
+  },
+  "spotify_search": {
+    "command": "python",
+    "args": [
+      "./mcp_server_spotify.py"
+    ],
+    "transport": "stdio"
+  },
+  "retriever": {
+    "command": "python",
+    "args": [
+      "./mcp_server_rag.py"
+    ],
+    "transport": "stdio"
+  },
+  "google_maps": {
+    "command": "python",
+    "args": [
+      "./mcp_server_googlemaps.py"
+    ],
+    "transport": "stdio"
+  }
+}
