@@ -26,5 +26,12 @@
       "./mcp_server_rag.py"
     ],
     "transport": "stdio"
+  },
+  "google_maps": {
+    "command": "python",
+    "args": [
+      "./mcp_server_googlemaps.py"
+    ],
+    "transport": "stdio"
   }
 }
