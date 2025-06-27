@@ -8,6 +8,22 @@
 
 This project provides a **LangGraph-based agentic architecture** that integrates various tools (e.g. weather, Spotify, Google Maps, etc.) via **MCP (Modular Command Protocol)** to enable intelligent and dynamic task execution.
 
+The repository contains **three main components**:
+
+1. **🎯 Simple ReAct Agent** (`simple-agent-mcp/`)
+   - Single ReAct agent that integrates MCP tools
+   - Basic functionality like Spotify, web search, time retrieval
+   - Command-line interface
+
+2. **🌐 Streamlit MCP Server Interface** (`streamlit-mcp-server-src/`)
+   - User-friendly web interface with ReAct agent
+   - Dynamic MCP tool management
+   - Real-time streaming responses
+
+3. **🔌 FastAPI Multi-Agent Extensible API** (`uv-agent-api/`)
+   - LangGraph StateGraph-based agent system
+   - Extensible architecture for multi-agent systems with RESTful API access
+
 It is designed to support:
 - 🗺️ Weekend spot planning with web search & map tools
 - 🍻 Party venue search with availability checks (HotPepper, Tabelog)
@@ -21,46 +37,35 @@ It is designed to support:
 
 ```txt
 langgraph-agentic-system-hub/
-├── README.md                  # Project documentation
-├── requirements.txt           # Dependency list
-├── main.py                    # Application entry point
+├── README.md
+├── requirements.txt
+├── main.py
 │
-├── agents/                    # LangGraph node logic for each agent
-│   ├── orchestrator.py        # Central agent for task routing
-│   ├── music_agent.py         # Agent for music-related tasks (Spotify, etc.)
-│   ├── event_agent.py         # Agent for party/outing suggestions
-│   └── weather_agent.py       # Agent for weather information
+├── src/
+│   ├── simple-agent-mcp/                # シンプルなAgent + MCP構成
+│   │   ├── planner_agent.py             # メインエージェント
+│   │   └── tools/                       # MCPサーバー群
+│   │       ├── mcp_server_time.py
+│   │       ├── mcp_server_search.py
+│   │       └── mcp_server_spotify.py
+│   │
+│   ├── streamlit-mcp-server-src/        # StreamlitベースのMCPサーバーUI
+│   │   ├── app_onlygpt_ken.py
+│   │   ├── mcp_server_time.py
+│   │   ├── mcp_server_search.py
+│   │   ├── mcp_server_spotify.py
+│   │   ├── mcp_server_googlemaps.py
+│   │   ├── mcp_server_rag.py
+│   │   ├── config.json
+│   │   └── utils.py
+│   │
+│   └── uv-agent-api/                    # FastAPIベースのエージェントAPI
+│       ├── uv_api_agent.py
+│       ├── uv_api_main.py
+│       └── uv_api_client.py
 │
-├── tools/                     # MCP servers for external tools (FastMCP)
-│   ├── spotify_mcp.py         # MCP server for Spotify search
-│   ├── weather_mcp.py         # MCP server for weather info
-│   ├── map_search_mcp.py      # Google Maps / HotPepper / Tabelog integration
-│   └── calendar_mcp.py        # Google Calendar / TODO management (planned)
-│
-├── graphs/                    # LangGraph workflow definitions
-│   └── planner_graph.py       # Multi-agent workflow definition
-│
-├── memory/                    # LangChain Memory (conversation history)
-│   └── memory_config.py       # Memory save/restore logic (e.g. ChatMessageHistory)
-│
-├── ui/                        # User interface (e.g. Gradio)
-│   └── web_ui.py              # Web-based chat UI (in development)
-│
-├── tests/                     # Tests for tools and agents
-│   └── test_spotify_mcp.py    # Spotify MCP test
-│
-├── src/streamlit-mcp-server-src/  # Streamlit-based MCP server interface
-│   ├── app_onlygpt_ken.py     # Main Streamlit application
-│   ├── mcp_server_time.py     # Time service MCP server
-│   ├── mcp_server_search.py   # Web search MCP server
-│   ├── mcp_server_spotify.py  # Spotify search MCP server
-│   ├── mcp_server_googlemaps.py # Google Maps API MCP server
-│   ├── mcp_server_rag.py      # RAG (Retrieval-Augmented Generation) MCP server
-│   ├── config.json            # MCP server configuration
-│   └── utils.py               # Utility functions
-│
-└── docs/                      # Architecture docs and use cases
-    └── architecture.png       # Diagrams, flowcharts, etc.
+└── docs/
+    └── architecture.png
 ```
 
 ---
@@ -108,6 +113,8 @@ You can install all dependencies at once with:
 pip install -r requirements.txt
 ```
 
+---
+
 ## 🚀 Getting Started
 
 ### 1. Clone & install dependencies
@@ -118,32 +125,139 @@ cd langgraph-agentic-system-hub
 pip install -r requirements.txt
 ```
 
-### 2. Run a tool MCP server
+### 2. Environment Setup
+
+Create a `.env` file in the root directory with the following variables:
+
 ```bash
-python src/tools/mcp_server_spotify.py
-# or
-python src/tools/mcp_server_time.py
-# or
-python src/tools/mcp_server_search.py
+# ===== LLM API Keys =====
+OPENAI_API_KEY=your_openai_api_key_here
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+
+# ===== Tool API Keys =====
+# Tavily Search API (for web search)
+TAVILY_API_KEY=your_tavily_api_key_here
+
+# Spotify API (for music search)
+SPOTIFY_USER_ID=your_spotify_user_id_here
+SPOTIFY_TOKEN=your_spotify_token_here
+SPOTIFY_CLIENT_ID=your_spotify_client_id_here
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret_here
+
+# Google Maps API (for location services)
+GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
+
+# Google Search API (for web search in uv-agent-api)
+GOOGLE_API_KEY=your_google_api_key_here
+GOOGLE_CSE_ID=your_google_cse_id_here
+
+# ===== Optional Settings =====
+# Authentication (for Streamlit interface)
+USE_LOGIN=true
+USER_ID=your_username
+USER_PASSWORD=your_password
 ```
 
-### 3. Run the LangGraph agent
-```bash
-python src/planner_agent.py
-```
+#### How to Get API Keys
 
-### 4. Launch the Gradio UI (coming soon)
-```bash
-python ui/web_ui.py
-```
+1. **OpenAI API Key**: [OpenAI Platform](https://platform.openai.com/api-keys)
+2. **Anthropic API Key**: [Anthropic Console](https://console.anthropic.com/)
+3. **Tavily API Key**: [Tavily](https://tavily.com/)
+4. **Spotify API**: [Spotify Developer Dashboard](https://developer.spotify.com/)
+5. **Google Maps API**: [Google Cloud Console](https://console.cloud.google.com/)
+6. **Google Search API**: [Google Custom Search](https://developers.google.com/custom-search)
+
+### 3. Available Tools
+
+#### 🗺️ Google Maps API
+- Route search and directions
+- Place search with ratings and business hours
+- Geocoding (address to coordinates)
+- Reverse geocoding (coordinates to address)
+
+#### 🔍 Web Search
+- Advanced web search with Tavily API
+- Configurable search depth
+- Rich search results with URLs
+
+#### 🎵 Spotify Search
+- Music search and recommendations
+- Artist and album information
+- Track details and audio features
+
+#### ⏰ Time Service
+- Current time for any timezone
+- Timezone conversion
+- Formatted time output
+
+#### 📚 RAG (Retrieval-Augmented Generation)
+- Document-based question answering
+- PDF document processing
+- Context-aware responses
+
+### 4. Choose Your Component
+
+This repository provides three independent implementations:
 
 ---
 
-## 🌐 Streamlit MCP Server Interface
+## 🎯 Component 1: Simple ReAct Agent
 
 ### Overview
 
-The **Streamlit MCP Server Interface** provides a user-friendly web-based interface for interacting with MCP tools through a ReAct agent. It allows users to easily add, configure, and use various MCP tools including Google Maps API, web search, Spotify, and more.
+The **Simple ReAct Agent** is a single ReAct agent that integrates MCP tools. It uses LangGraph's `create_react_agent` to provide basic functionality like Spotify, web search, and time retrieval.
+
+### Quick Start
+
+#### 1. Run MCP Tool Servers
+
+Start the required MCP servers:
+
+```bash
+# Terminal 1: Spotify MCP Server
+python src/simple-agent-mcp/tools/mcp_server_spotify.py
+
+# Terminal 2: Search MCP Server
+python src/simple-agent-mcp/tools/mcp_server_search.py
+
+# Terminal 3: Time MCP Server
+python src/simple-agent-mcp/tools/mcp_server_time.py
+```
+
+#### 2. Launch the Agent
+
+```bash
+python src/simple-agent-mcp/planner_agent.py
+```
+
+### Features
+
+- **MCP Tool Integration**: Integration with multiple MCP servers
+- **ReAct Reasoning**: Combination of tool usage and reasoning
+- **Simple Interaction**: Direct conversation via command line
+- **Basic Features**: Music search, web search, time retrieval
+
+### Use Cases
+
+- Understanding MCP tool integration basics
+- Building simple AI assistants
+- CLI-based automation
+- Prototype development
+
+---
+
+## 🌐 Component 2: Streamlit MCP Server Interface
+
+### Overview
+
+The **Streamlit MCP Server Interface** provides a user-friendly web-based interface for interacting with MCP tools through a ReAct agent. It's perfect for users who prefer a graphical interface and want to easily manage multiple tools.
+
+### Quick Start
+
+```bash
+cd src/streamlit-mcp-server-src
+streamlit run app_onlygpt_ken.py
+```
 
 ### Features
 
@@ -156,140 +270,6 @@ The **Streamlit MCP Server Interface** provides a user-friendly web-based interf
 - 📚 **RAG Support**: Document-based question answering
 - 🔐 **Optional Authentication**: Login system for secure access
 - 💬 **Real-time Streaming**: Live response streaming with tool call information
-
-### Quick Start
-
-#### 1. Environment Setup
-
-Create a `.env` file in the `src/streamlit-mcp-server-src/` directory:
-
-```bash
-# LLM API Keys
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
-
-# Tool API Keys
-TAVILY_API_KEY=your_tavily_api_key_here
-SPOTIFY_CLIENT_ID=your_spotify_client_id_here
-SPOTIFY_CLIENT_SECRET=your_spotify_client_secret_here
-GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
-
-# Optional: Authentication
-USE_LOGIN=true
-USER_ID=your_username
-USER_PASSWORD=your_password
-```
-
-#### 2. Launch the Application
-
-```bash
-cd src/streamlit-mcp-server-src
-streamlit run app_onlygpt_ken.py
-```
-
-#### 3. Configure Tools
-
-1. Open the web interface in your browser
-2. Go to the sidebar and click "Apply Settings" to initialize the default tools
-3. Use "Add MCP Tools" to add additional tools as needed
-
-### Available Tools
-
-#### 🗺️ Google Maps API (`mcp_server_googlemaps.py`)
-
-**Features:**
-- Route search and directions
-- Place search with ratings and business hours
-- Geocoding (address to coordinates)
-- Reverse geocoding (coordinates to address)
-
-**Setup:**
-1. Get Google Maps API key from [Google Cloud Console](https://console.cloud.google.com/)
-2. Enable required APIs:
-   - Maps JavaScript API
-   - Directions API
-   - Geocoding API
-   - Places API
-3. Add `GOOGLE_MAPS_API_KEY=your_key` to `.env`
-
-**Usage Examples:**
-- "東京駅から渋谷駅までのルートを教えて"
-- "渋谷駅周辺のレストランを探して"
-- "東京都渋谷区の座標を教えて"
-
-#### 🔍 Web Search (`mcp_server_search.py`)
-
-**Features:**
-- Advanced web search with Tavily API
-- Configurable search depth
-- Rich search results with URLs
-
-**Setup:**
-1. Get Tavily API key from [Tavily](https://tavily.com/)
-2. Add `TAVILY_API_KEY=your_key` to `.env`
-
-#### 🎵 Spotify Search (`mcp_server_spotify.py`)
-
-**Features:**
-- Music search and recommendations
-- Artist and album information
-- Track details and audio features
-
-**Setup:**
-1. Create Spotify app in [Spotify Developer Dashboard](https://developer.spotify.com/)
-2. Add credentials to `.env`:
-   ```
-   SPOTIFY_CLIENT_ID=your_client_id
-   SPOTIFY_CLIENT_SECRET=your_client_secret
-   ```
-
-#### ⏰ Time Service (`mcp_server_time.py`)
-
-**Features:**
-- Current time for any timezone
-- Timezone conversion
-- Formatted time output
-
-#### 📚 RAG (Retrieval-Augmented Generation) (`mcp_server_rag.py`)
-
-**Features:**
-- Document-based question answering
-- PDF document processing
-- Context-aware responses
-
-**Setup:**
-1. Place documents in the `data/` directory
-2. The system will automatically process and index them
-
-### Configuration
-
-#### Adding Custom Tools
-
-1. Create a new MCP server file (e.g., `mcp_server_custom.py`)
-2. Follow the FastMCP pattern from existing servers
-3. Add the tool configuration to `config.json`:
-
-```json
-{
-  "custom_tool": {
-    "command": "python",
-    "args": ["./mcp_server_custom.py"],
-    "transport": "stdio"
-  }
-}
-```
-
-#### Tool Configuration Format
-
-```json
-{
-  "tool_name": {
-    "command": "python",
-    "args": ["./mcp_server_toolname.py"],
-    "transport": "stdio"
-  }
-}
-```
 
 ### Advanced Features
 
@@ -315,58 +295,99 @@ Choose from multiple LLM models:
 - **Recursion Limit**: Control tool call recursion depth (10-200)
 - **Conversation Memory**: Automatic conversation history management
 
-### Troubleshooting
+### Use Cases
 
-#### Common Issues
+- Interactive web-based AI assistance
+- Tool exploration and experimentation
+- User-friendly AI interface for non-technical users
+- Real-time AI interactions with visual feedback
 
-1. **API Key Errors**
-   - Ensure all required API keys are set in `.env`
-   - Check API key validity and quotas
+---
 
-2. **Tool Connection Issues**
-   - Verify MCP server files are executable
-   - Check `config.json` syntax
-   - Ensure all dependencies are installed
+## 🔌 Component 3: FastAPI Multi-Agent Extensible API
 
-3. **Streamlit Issues**
-   - Clear browser cache
-   - Restart Streamlit server
-   - Check port availability
+### Overview
 
-#### Debug Mode
+The **FastAPI Multi-Agent Extensible API** is a LangGraph StateGraph-based agent system. While currently implemented as a single agent, it has an extensible architecture that can be expanded to multi-agent systems in the future.
 
-Enable debug information by setting environment variables:
+### Quick Start
+
+#### 1. Start the Server
 
 ```bash
-STREAMLIT_LOG_LEVEL=debug
+cd src/uv-agent-api
+uvicorn uv_api_main:app --reload --port 8001
 ```
 
-### Development
+#### 2. Use the Client
 
-#### Adding New MCP Tools
+In another terminal:
 
-1. **Create MCP Server**:
-   ```python
-   from mcp.server.fastmcp import FastMCP
-   
-   mcp = FastMCP("YourToolName")
-   
-   @mcp.tool()
-   async def your_tool_function(param: str) -> str:
-       # Your tool logic here
-       return "Result"
-   
-   if __name__ == "__main__":
-       mcp.run(transport="stdio")
-   ```
+```bash
+cd src/uv-agent-api
+python uv_api_client.py
+```
 
-2. **Update Configuration**:
-   - Add tool to `config.json`
-   - Update default settings in `app_onlygpt_ken.py`
+### API Endpoints
 
-3. **Test Integration**:
-   - Restart Streamlit application
-   - Test tool functionality through the interface
+- `POST /ask` : Send a question and get the AI agent's response
+- `GET /history` : Retrieve conversation history
+- `DELETE /history` : Clear conversation history
+
+### Integration Example
+
+```python
+import requests
+
+# Send a question to the agent
+response = requests.post("http://localhost:8001/ask", 
+                        json={"question": "What's the weather like in Tokyo?"})
+result = response.json()
+print(result["response"])
+
+# Get conversation history
+history = requests.get("http://localhost:8001/history")
+print(history.json())
+```
+
+### Features
+
+- **StateGraph-based**: State management with LangGraph
+- **RESTful API**: Standard HTTP endpoints
+- **Programmatic Access**: Easy integration with existing applications
+- **Conversation Management**: Built-in conversation history and state management
+- **Scalable Architecture**: Client-server separation for better performance
+
+### Multi-Agent Extensibility
+
+While currently implemented as a single agent, it can be extended to multi-agent systems for the following reasons:
+
+- **StateGraph Architecture**: Ability to add multiple nodes and edges
+- **State Management**: Flexible state management with `AgentState`
+- **Modular Design**: Easy addition of new agent nodes
+
+### Use Cases
+
+- Integration with existing web applications
+- Mobile app backends
+- Automated workflows and scripts
+- Custom AI interfaces
+- Microservices architecture
+- Foundation for multi-agent systems
+
+---
+
+## 🔄 Component Comparison
+
+| Feature | Simple ReAct Agent | Streamlit Interface | FastAPI Multi-Agent API |
+|---------|-------------------|-------------------|------------------------|
+| **User Interface** | Command line | Web UI | REST API |
+| **Complexity** | Low (single ReAct) | Medium (ReAct) | High (StateGraph) |
+| **Use Case** | Basic functionality | Interactive use | Integration & Extension |
+| **Setup** | Multiple servers | Single app | Client-server |
+| **Scalability** | Low | Medium | High |
+| **Learning Curve** | Gentle | Gentle | Steep |
+| **Multi-Agent Support** | No | No | Extensible |
 
 ---
 
@@ -417,48 +438,3 @@ MIT License.
 Created by Centaurus-Ken for exploring next-gen LLM applications with modular tool orchestration.
 
 ---
-
-## Appendix: FastAPI + Uvicorn MCP Agent API Example
-
-This repository also includes a sample implementation of an MCP agent API using FastAPI and Uvicorn.
-
-### Directory Structure
-
-```
-src/uv_agent_api/
-  ├── uv_api_agent.py   # Agent core (LangGraph/LLM/Tool definitions)
-  ├── uv_api_main.py    # FastAPI server launcher
-  └── uv_api_client.py  # API client (for sending requests)
-```
-
-### 1. Start the Server
-
-```bash
-cd src/uv_agent_api
-uvicorn uv_api_main:app --reload --port 8001
-```
-
-### 2. Example: Using the Client
-
-In another terminal:
-
-```bash
-cd src/uv_agent_api
-python uv_api_client.py
-```
-
-- You can interact with the AI agent in a chat format.
-- Type `quit` or `exit` to end the session.
-
-### 3. API Endpoints
-
-- `POST /ask` : Send a question and get the AI agent's response
-- `GET /history` : Retrieve conversation history
-- `DELETE /history` : Clear conversation history
-
-### 4. Notes
-- `uv_api_agent.py` … Defines LangGraph/LLM/Tools/conversation memory and the agent core
-- `uv_api_main.py` … FastAPI server endpoint definitions
-- `uv_api_client.py` … Client for sending requests to the server
-
-If you need to use API keys or connect to external services, please refer to the comments and environment variable settings in each script. 
