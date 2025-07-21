@@ -2039,31 +2039,33 @@ scheduler_agent = create_react_agent(
     tools=[add_to_google_calendar, get_current_time, calculate_target_date],
     # name="scheduler_agent",
     name="scheduler_expert",
-    prompt="""You are a scheduler agent. Use Google Calendar to add events.
+    prompt="""
+            You are a scheduler agent. Use Google Calendar to add events.
 
-When a user asks to schedule something, you should:
-1. FIRST, use get_current_time() to get the current time
-2. Extract the event title and time from their request
-3. If the user mentions relative dates (like "明日", "今日", "来週"), use calculate_target_date() to get the actual datetime
-4. Use the calculated datetime with add_to_google_calendar tool
+            When a user asks to schedule something, you should:
+            1. FIRST, use get_current_time() to get the current time
+            2. Extract the event title and time from their request
+            3. If the user mentions relative dates (like "明日", "今日", "来週"), use calculate_target_date() to get the actual datetime
+            4. Use the calculated datetime with add_to_google_calendar tool
 
-Examples:
-- User: "明日の15時に会議を予定に入れて" 
-  → 1. get_current_time() to get current date
-  → 2. calculate_target_date(relative_date="明日", time_str="15時")
-  → 3. add_to_google_calendar(event="会議", time="[calculated_datetime]")
+            Examples:
+            - User: "明日の15時に会議を予定に入れて" 
+            → 1. get_current_time() to get current date
+            → 2. calculate_target_date(relative_date="明日", time_str="15時")
+            → 3. add_to_google_calendar(event="会議", time="[calculated_datetime]")
 
-- User: "今日の14:30に歯医者の予約を入れて" 
-  → 1. get_current_time() to get current date
-  → 2. calculate_target_date(relative_date="今日", time_str="14:30")
-  → 3. add_to_google_calendar(event="歯医者の予約", time="[calculated_datetime]")
+            - User: "今日の14:30に歯医者の予約を入れて" 
+            → 1. get_current_time() to get current date
+            → 2. calculate_target_date(relative_date="今日", time_str="14:30")
+            → 3. add_to_google_calendar(event="歯医者の予約", time="[calculated_datetime]")
 
-- User: "来週月曜日の10時に面接を予定に入れて" 
-  → 1. get_current_time() to get current date
-  → 2. calculate_target_date(relative_date="来週月曜日", time_str="10時")
-  → 3. add_to_google_calendar(event="面接", time="[calculated_datetime]")
+            - User: "来週月曜日の10時に面接を予定に入れて" 
+            → 1. get_current_time() to get current date
+            → 2. calculate_target_date(relative_date="来週月曜日", time_str="10時")
+            → 3. add_to_google_calendar(event="面接", time="[calculated_datetime]")
 
-ALWAYS start by calling get_current_time() to get the current date, then use calculate_target_date() for relative dates, and finally call add_to_google_calendar()."""
+            ALWAYS start by calling get_current_time() to get the current date, then use calculate_target_date() for relative dates, and finally call add_to_google_calendar().
+            """
 )
 
 math_agent = create_react_agent(
@@ -2087,20 +2089,22 @@ music_agent = create_react_agent(
     model=model,
     tools=[search_spotify_tracks, get_spotify_playlist, search_spotify_artists, get_current_time],
     name="music_expert",
-    prompt="""You are a music expert with access to Spotify. You can search for tracks, artists, and playlists.
+    prompt="""
+            You are a music expert with access to Spotify. You can search for tracks, artists, and playlists.
 
-When users ask about music, you should:
-1. Search for tracks using search_spotify_tracks()
-2. Search for artists using search_spotify_artists()
-3. Get playlist information using get_spotify_playlist()
-4. Provide music recommendations and information
+            When users ask about music, you should:
+            1. Search for tracks using search_spotify_tracks()
+            2. Search for artists using search_spotify_artists()
+            3. Get playlist information using get_spotify_playlist()
+            4. Provide music recommendations and information
 
-Examples:
-- User: "ビートルズの曲を探して" → search_spotify_tracks(query="ビートルズ")
-- User: "ビートルズのアーティスト情報を教えて" → search_spotify_artists(artist_name="ビートルズ")
-- User: "人気のプレイリストを教えて" → get_spotify_playlist(playlist_id="37i9dQZEVXbMDoHDwVN2tF") # Global Top 50
+            Examples:
+            - User: "ビートルズの曲を探して" → search_spotify_tracks(query="ビートルズ")
+            - User: "ビートルズのアーティスト情報を教えて" → search_spotify_artists(artist_name="ビートルズ")
+            - User: "人気のプレイリストを教えて" → get_spotify_playlist(playlist_id="37i9dQZEVXbMDoHDwVN2tF") # Global Top 50
 
-Always provide helpful music recommendations and information. Include Spotify URLs when available."""
+            Always provide helpful music recommendations and information. Include Spotify URLs when available.
+            """
 )
 
 # 動画エージェント
@@ -2108,18 +2112,20 @@ video_agent = create_react_agent(
     model=model,
     tools=[search_youtube_videos, get_video_info, get_current_time],
     name="video_expert",
-    prompt="""You are a video expert with access to YouTube. You can search for videos and get detailed information.
+    prompt="""
+            You are a video expert with access to YouTube. You can search for videos and get detailed information.
 
-When users ask about videos, you should:
-1. Search for videos using search_youtube_videos()
-2. Get detailed video information using get_video_info()
-3. Provide video recommendations and information
+            When users ask about videos, you should:
+            1. Search for videos using search_youtube_videos()
+            2. Get detailed video information using get_video_info()
+            3. Provide video recommendations and information
 
-Examples:
-- User: "料理の動画を探して" → search_youtube_videos(query="料理 レシピ")
-- User: "この動画の詳細を教えて" → get_video_info(video_id="video_id")
+            Examples:
+            - User: "料理の動画を探して" → search_youtube_videos(query="料理 レシピ")
+            - User: "この動画の詳細を教えて" → get_video_info(video_id="video_id")
 
-Always provide helpful video recommendations and information."""
+            Always provide helpful video recommendations and information.
+            """
 )
 
 # 旅行エージェント
@@ -2127,27 +2133,29 @@ travel_agent = create_react_agent(
     model=model,
     tools=[search_jalan_hotels, search_airbnb_accommodations, get_current_time],
     name="travel_expert",
-    prompt="""You are a travel expert with access to hotel and accommodation booking services through web scraping.
+    prompt="""
+            You are a travel expert with access to hotel and accommodation booking services through web scraping.
 
-When users ask about travel accommodations, you should:
-1. Search for hotels using search_jalan_hotels() - scrapes Jalan.net for real hotel data
-2. Search for Airbnb accommodations using search_airbnb_accommodations() - scrapes Airbnb.com for real accommodation data
-3. Provide travel recommendations and booking information
+            When users ask about travel accommodations, you should:
+            1. Search for hotels using search_jalan_hotels() - scrapes Jalan.net for real hotel data
+            2. Search for Airbnb accommodations using search_airbnb_accommodations() - scrapes Airbnb.com for real accommodation data
+            3. Provide travel recommendations and booking information
 
-Examples:
-- User: "東京のホテルを明日から2泊で探して" 
-  → search_jalan_hotels(location="東京", check_in="2024-12-20", check_out="2024-12-22", guests=2)
-- User: "大阪のAirbnbを来週から3泊で探して" 
-  → search_airbnb_accommodations(location="大阪", check_in="2024-12-25", check_out="2024-12-28", guests=2)
+            Examples:
+            - User: "東京のホテルを明日から2泊で探して" 
+            → search_jalan_hotels(location="東京", check_in="2024-12-20", check_out="2024-12-22", guests=2)
+            - User: "大阪のAirbnbを来週から3泊で探して" 
+            → search_airbnb_accommodations(location="大阪", check_in="2024-12-25", check_out="2024-12-28", guests=2)
 
-The tools perform real web scraping to get current hotel and accommodation information, including:
-- Real prices and availability
-- Actual hotel/accommodation names
-- Current ratings and reviews
-- Direct booking URLs
-- Amenities and features
+            The tools perform real web scraping to get current hotel and accommodation information, including:
+            - Real prices and availability
+            - Actual hotel/accommodation names
+            - Current ratings and reviews
+            - Direct booking URLs
+            - Amenities and features
 
-Always provide helpful travel recommendations and accommodation options based on the scraped data."""
+            Always provide helpful travel recommendations and accommodation options based on the scraped data.
+            """
 )
 
 # レストランエージェント
@@ -2155,57 +2163,59 @@ restaurant_agent = create_react_agent(
     model=model,
     tools=[search_hotpepper_restaurants, search_hotpepper_restaurants_by_name, get_hotpepper_master_data, search_google_maps_restaurants, check_restaurant_availability, generate_google_maps_url, generate_directions_url, get_current_time],
     name="restaurant_expert",
-    prompt="""You are a restaurant expert with access to comprehensive restaurant search and booking services.
+    prompt="""
+            You are a restaurant expert with access to comprehensive restaurant search and booking services.
 
-When users ask about restaurants, you should:
-1. Search for restaurants using search_hotpepper_restaurants() - uses real HotPepper Gourmet API with accurate area codes and genre codes
-2. Search for specific restaurants by name using search_hotpepper_restaurants_by_name() - for exact restaurant searches
-3. Get master data using get_hotpepper_master_data() - to get available genres, areas, budgets, and special features
-4. Search for restaurants using search_google_maps_restaurants() - uses Google Places API for additional results
-5. Check restaurant availability using check_restaurant_availability() - for booking information
-6. Generate Google Maps URLs using generate_google_maps_url() for location access
-7. Generate directions URLs using generate_directions_url() for route planning
+            When users ask about restaurants, you should:
+            1. Search for restaurants using search_hotpepper_restaurants() - uses real HotPepper Gourmet API with accurate area codes and genre codes
+            2. Search for specific restaurants by name using search_hotpepper_restaurants_by_name() - for exact restaurant searches
+            3. Get master data using get_hotpepper_master_data() - to get available genres, areas, budgets, and special features
+            4. Search for restaurants using search_google_maps_restaurants() - uses Google Places API for additional results
+            5. Check restaurant availability using check_restaurant_availability() - for booking information
+            6. Generate Google Maps URLs using generate_google_maps_url() for location access
+            7. Generate directions URLs using generate_directions_url() for route planning
 
-Examples:
-- User: "渋谷のイタリアンを探して" → search_hotpepper_restaurants(location="渋谷", cuisine="イタリアン")
-- User: "新宿の3000円以下のレストランを探して" → search_hotpepper_restaurants(location="新宿", budget="3000円以下")
-- User: "〇〇レストランの情報を教えて" → search_hotpepper_restaurants_by_name(restaurant_name="〇〇レストラン")
-- User: "利用可能なジャンルを教えて" → get_hotpepper_master_data(master_type="genre")
-- User: "東京のエリアを教えて" → get_hotpepper_master_data(master_type="large_area")
-- User: "このレストランの予約状況を確認して" → check_restaurant_availability(restaurant_name="レストラン名", date="2024-12-20", time="19:00")
-- User: "このレストランの場所を教えて" → generate_google_maps_url(location="東京都渋谷区1-1-1", restaurant_name="レストラン名")
-- User: "東京駅からこのレストランへの行き方を教えて" → generate_directions_url(origin="東京駅", destination="レストラン名", mode="transit")
+            Examples:
+            - User: "渋谷のイタリアンを探して" → search_hotpepper_restaurants(location="渋谷", cuisine="イタリアン")
+            - User: "新宿の3000円以下のレストランを探して" → search_hotpepper_restaurants(location="新宿", budget="3000円以下")
+            - User: "〇〇レストランの情報を教えて" → search_hotpepper_restaurants_by_name(restaurant_name="〇〇レストラン")
+            - User: "利用可能なジャンルを教えて" → get_hotpepper_master_data(master_type="genre")
+            - User: "東京のエリアを教えて" → get_hotpepper_master_data(master_type="large_area")
+            - User: "このレストランの予約状況を確認して" → check_restaurant_availability(restaurant_name="レストラン名", date="2024-12-20", time="19:00")
+            - User: "このレストランの場所を教えて" → generate_google_maps_url(location="東京都渋谷区1-1-1", restaurant_name="レストラン名")
+            - User: "東京駅からこのレストランへの行き方を教えて" → generate_directions_url(origin="東京駅", destination="レストラン名", mode="transit")
 
-IMPORTANT: Always include Google Maps access URLs in your responses when presenting restaurant information. Each restaurant should have:
-- google_maps_url: Direct link to the restaurant location on Google Maps
-- directions_url: Route planning from the nearest station to the restaurant
+            IMPORTANT: Always include Google Maps access URLs in your responses when presenting restaurant information. Each restaurant should have:
+            - google_maps_url: Direct link to the restaurant location on Google Maps
+            - directions_url: Route planning from the nearest station to the restaurant
 
-This helps users easily navigate to the restaurants you recommend.
+            This helps users easily navigate to the restaurants you recommend.
 
-ERROR HANDLING: If the HotPepper API returns an error or no results:
-1. The system automatically tries a fallback search using keyword-based search
-2. If still no results, it provides helpful suggestions and alternative search methods
-3. Always explain what happened and suggest alternative approaches (e.g., try different areas, cuisines, or use Google Maps search)
+            ERROR HANDLING: If the HotPepper API returns an error or no results:
+            1. The system automatically tries a fallback search using keyword-based search
+            2. If still no results, it provides helpful suggestions and alternative search methods
+            3. Always explain what happened and suggest alternative approaches (e.g., try different areas, cuisines, or use Google Maps search)
 
-The HotPepper API provides comprehensive restaurant data including:
-- Actual restaurant names and locations with precise area codes
-- Real prices and ratings with accurate budget codes
-- Current opening hours and contact information
-- Direct booking URLs and coupon information
-- Detailed amenities and features (Wi-Fi, parking, private rooms, etc.)
-- Credit card acceptance information
-- Special features and categories
-- High-quality photos and logos
+            The HotPepper API provides comprehensive restaurant data including:
+            - Actual restaurant names and locations with precise area codes
+            - Real prices and ratings with accurate budget codes
+            - Current opening hours and contact information
+            - Direct booking URLs and coupon information
+            - Detailed amenities and features (Wi-Fi, parking, private rooms, etc.)
+            - Credit card acceptance information
+            - Special features and categories
+            - High-quality photos and logos
 
-The API supports:
-- Large area codes (Z011-Z050 for all prefectures)
-- Middle area codes (Z011001-Z011152 for detailed Tokyo areas)
-- Genre codes (G001-G012 for all cuisine types)
-- Budget codes (B001-B014 for all price ranges)
-- Special feature codes (LT0004-LT0086 for various occasions)
-- Credit card codes (c01-c10 for different card types)
+            The API supports:
+            - Large area codes (Z011-Z050 for all prefectures)
+            - Middle area codes (Z011001-Z011152 for detailed Tokyo areas)
+            - Genre codes (G001-G012 for all cuisine types)
+            - Budget codes (B001-B014 for all price ranges)
+            - Special feature codes (LT0004-LT0086 for various occasions)
+            - Credit card codes (c01-c10 for different card types)
 
-Always provide helpful restaurant recommendations and availability information based on the real API data, and use the appropriate search parameters for the best results."""
+            Always provide helpful restaurant recommendations and availability information based on the real API data, and use the appropriate search parameters for the best results.
+            """
 )
 
 # 構造化出力を使用するスーパーバイザー用のモデル
@@ -2244,6 +2254,40 @@ app = workflow.compile()
 graph_image = app.get_graph(xray=True).draw_mermaid_png()
 with open("workflow.png", "wb") as f:
     f.write(graph_image)
+
+def show_spotify_embeds_streamlit(tracks, title="Spotify埋め込みプレイヤー"):
+    """
+    楽曲リスト（search_spotify_tracksの結果）からSpotify埋め込みプレイヤーをStreamlitで表示
+    Args:
+        tracks: 楽曲情報のリスト（dictのリスト、各trackに'spotify_url'キーが必要）
+        title: セクションタイトル
+    """
+    import streamlit as st
+    st.markdown(f"### {title}")
+    for track in tracks:
+        url = track.get('spotify_url')
+        if url and 'track/' in url:
+            track_id = url.split('track/')[-1].split('?')[0]
+            embed_url = f"https://open.spotify.com/embed/track/{track_id}"
+            st.markdown(
+                f'<iframe src="{embed_url}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>',
+                unsafe_allow_html=True
+            )
+
+def show_googlemap_embed_streamlit(address_or_query, title="Googleマップ埋め込み"):
+    import streamlit as st
+    from urllib.parse import quote
+    query = quote(address_or_query)
+    embed_url = f"https://www.google.com/maps?q={query}&output=embed"
+    st.markdown(f"#### {title}")
+    st.markdown(
+        f'''
+        <div style="border-radius:16px; overflow:hidden; width:100%; max-width:400px; height:300px;">
+          <iframe src="{embed_url}" width="100%" height="300" frameborder="0" style="border-radius:16px;" allowfullscreen></iframe>
+        </div>
+        ''',
+        unsafe_allow_html=True
+    )
 
 if __name__ == "__main__":
     user_input = input("質問を入力してください: ")
