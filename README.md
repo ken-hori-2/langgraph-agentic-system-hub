@@ -6,7 +6,7 @@
 
 ## 🔥 Overview
 
-This project provides a **LangGraph-based agentic architecture** that integrates various tools (e.g. weather, Spotify, Google Maps, etc.) via **MCP (Modular Command Protocol)** to enable intelligent and dynamic task execution.
+This project provides a **LangGraph-based agentic architecture** that integrates various tools (e.g. weather, Spotify, Google Maps, etc.) via **MCP (Model Context Protocol)** to enable intelligent and dynamic task execution.
 
 The repository contains **three main components**:
 
