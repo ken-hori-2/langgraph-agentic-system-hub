@@ -75,17 +75,17 @@ https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervi
 # GUIディレクトリに移動
 cd src/langgraph-supervisor/gui
 
-# 英語版アプリケーション起動
-streamlit run streamlit_app_en.py
-
 # 日本語版アプリケーション起動
 streamlit run streamlit_app.py
 
+# 英語版アプリケーション起動
+streamlit run streamlit_app_en.py
+
 # ポート指定で起動（例：8501）
-streamlit run streamlit_app_en.py --server.port 8501
+streamlit run streamlit_app.py --server.port 8501
 
 # 外部アクセス許可で起動
-streamlit run streamlit_app_en.py --server.address 0.0.0.0
+streamlit run streamlit_app.py --server.address 0.0.0.0
 ```
 
 #### ✨ 主な機能
@@ -156,23 +156,32 @@ langgraph-agentic-system-hub/
 │   │
 │   └── 📁 langgraph-supervisor/       # 🆕 マルチエージェントスーパーバイザー
 │       ├── 📁 cli/                   # コマンドラインインターフェース
-│       │   ├── main.py               # メイン実行ファイル
+│       │   ├── README.md             # CLI使用ガイド
 │       │   ├── supervisor_workers_multiagents.py
-│       │   ├── example_usage.py
+│       │   ├── requirements.txt
 │       │   └── workflow.png          # ワークフロー図
 │       │
 │       ├── 📁 gui/                   # グラフィカルユーザーインターフェース
-│       │   ├── app_integrated.py     # メインGUIアプリケーション
-│       │   ├── example_app_integrated.py
-│       │   └── requirements_app_integrated.txt
+│       │   ├── README.md             # GUI使用ガイド
+│       │   ├── streamlit_app.py      # 日本語版メインアプリケーション
+│       │   ├── streamlit_app_en.py   # 英語版メインアプリケーション
+│       │   ├── supervisor_workers_multiagents.py
+│       │   ├── requirements.txt
+│       │   ├── workflow.png          # ワークフロー図
+│       │   ├── setup.sh              # macOS/Linux用セットアップスクリプト
+│       │   ├── setup.bat             # Windows用セットアップスクリプト
+│       │   └── .env                  # 環境変数設定
 │       │
-│       ├── 📁 mcp_servers/           # MCPサーバー実装
-│       │   ├── mcp_server_spotify.py
-│       │   ├── mcp_server_hotpepper.py
-│       │   ├── mcp_server_googlemaps.py
-│       │   └── mcp_server_search.py
+│       ├── 📁 assets/                 # アセットファイル
+│       │   ├── demo_en.mp4           # 英語版デモ動画
+│       │   ├── demo_ja.mp4           # 日本語版デモ動画
+│       │   ├── demo_en.gif           # 英語版デモGIF
+│       │   ├── demo_ja.gif           # 日本語版デモGIF
+│       │   ├── web_ja.png            # 日本語版Webアプリ画像
+│       │   └── web_en.png            # 英語版Webアプリ画像
 │       │
-│       └── README.md                 # 詳細ドキュメント
+│       ├── README.md                 # 詳細ドキュメント
+│       └── LICENSE                   # ライセンスファイル
 │
 ├── 📁 docs/
 │   └── architecture.png
@@ -289,10 +298,10 @@ python uv_api_client.py
 #### 使用例
 ```bash
 # CLIインターフェース
-python src/langgraph-supervisor/cli/main.py
+python src/langgraph-supervisor/cli/supervisor_workers_multiagents.py
 
 # GUIインターフェース
-streamlit run src/langgraph-supervisor/gui/app_integrated.py
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py
 
 # スクリプト実行
 python -c "
@@ -349,7 +358,7 @@ pip install -r requirements.txt
 pip install -r src/langgraph-supervisor/requirements.txt
 
 # GUI使用時
-pip install -r src/langgraph-supervisor/gui/requirements_app_integrated.txt
+pip install -r src/langgraph-supervisor/gui/requirements.txt
 ```
 
 ### 3. 環境変数の設定
@@ -415,29 +424,30 @@ USER_PASSWORD=your_password
 
 ```bash
 # マルチエージェントシステムの起動
-python src/langgraph-supervisor/cli/main.py
-
-# 対話モードで実行
-python src/langgraph-supervisor/cli/main.py --interactive
+python src/langgraph-supervisor/cli/supervisor_workers_multiagents.py
 
 # スクリプト実行
-python src/langgraph-supervisor/cli/main.py --script "明日の15時に会議を予定に入れて"
-
-# バッチ処理
-python src/langgraph-supervisor/cli/main.py --batch tasks.txt
+python -c "
+from src.langgraph-supervisor.cli.supervisor_workers_multiagents import app
+result = app.invoke({'messages': [{'role': 'user', 'content': '明日の15時に会議を予定に入れて'}]})
+print(result['messages'][-1]['content'])
+"
 ```
 
 ### 🌐 GUI インターフェース（マルチエージェント）
 
 ```bash
 # Streamlitアプリケーション起動
-streamlit run src/langgraph-supervisor/gui/app_integrated.py
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py
+
+# 英語版アプリケーション起動
+streamlit run src/langgraph-supervisor/gui/streamlit_app_en.py
 
 # ポート指定で起動
-streamlit run src/langgraph-supervisor/gui/app_integrated.py --server.port 8501
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py --server.port 8501
 
 # 外部アクセス許可で起動
-streamlit run src/langgraph-supervisor/gui/app_integrated.py --server.address 0.0.0.0
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py --server.address 0.0.0.0
 ```
 
 ### 🎯 Simple ReAct Agent
@@ -612,15 +622,7 @@ pip install -r requirements.txt
 pip install -r src/langgraph-supervisor/requirements.txt
 ```
 
-#### 3. MCPサーバー接続エラー
-
-```bash
-# エラー: MCP server files not found
-# 解決: 必要なMCPサーバーファイルを配置
-ls -la src/langgraph-supervisor/mcp_servers/mcp_server_*.py
-```
-
-#### 4. ポート競合エラー
+#### 3. ポート競合エラー
 
 ```bash
 # エラー: Port already in use
