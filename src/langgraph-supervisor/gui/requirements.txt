@@ -1,0 +1,39 @@
+# Core dependencies
+streamlit>=1.28.0
+pandas>=2.0.0
+plotly>=5.15.0
+pillow>=10.0.0
+
+# LangGraph and LangChain
+langgraph>=0.2.0
+langchain>=0.1.0
+langchain-openai>=0.1.0  # GPT-4o support
+langchain-anthropic>=0.1.0  # Claude 3.5/3.7 support
+langchain-tavily>=0.1.0
+
+# AI Models
+# OpenAI GPT-4o-mini (default)
+# Anthropic Claude 3.5 Sonnet / 3.7 Haiku
+
+# API integrations
+requests>=2.31.0
+google-auth>=2.23.0
+google-auth-oauthlib>=1.1.0
+google-auth-httplib2>=0.1.1
+google-api-python-client>=2.100.0
+
+# Data processing
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+
+# Optional: For enhanced features
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Development dependencies (optional)
+# pytest>=7.4.0
+# black>=23.0.0
+# flake8>=6.0.0
+
+# License: MIT
+# This project is licensed under the MIT License - see LICENSE file for details 

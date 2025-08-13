@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIマルチエージェントシステム構成図</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .mermaid-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .mermaid-section h3 {
+            margin: 0 0 20px 0;
+            color: #2c3e50;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        
+        .mermaid-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .architecture-diagram {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .user-section, .supervisor-section, .agents-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .user-section {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+        }
+        
+        .supervisor-section {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+            color: white;
+        }
+        
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .agent-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .agent-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .agent-card h4 {
+            margin: 0 0 8px 0;
+            color: #2c3e50;
+            font-size: 0.9em;
+        }
+        
+        .agent-card p {
+            margin: 0;
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+        
+        .api-section {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .api-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .api-card h5 {
+            margin: 0 0 5px 0;
+            font-size: 0.9em;
+        }
+        
+        .api-card p {
+            margin: 0;
+            font-size: 0.7em;
+            opacity: 0.8;
+        }
+        
+        .ui-section {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .ui-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .ui-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .ui-card h5 {
+            margin: 0 0 8px 0;
+            font-size: 1em;
+        }
+        
+        .ui-card p {
+            margin: 0;
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
+        
+        .flow-arrows {
+            position: relative;
+            height: 60px;
+            margin: 20px 0;
+        }
+        
+        .arrow {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #3498db;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid #3498db;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+        
+        .features-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+        
+        .feature-card h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        .feature-card ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        
+        .feature-card li {
+            margin-bottom: 5px;
+        }
+        
+        .tech-stack {
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .tech-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .architecture-diagram {
+                grid-template-columns: 1fr;
+            }
+            
+            .agents-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .api-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ui-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AIマルチエージェントシステム</h1>
+            <p>LangGraph + Streamlit + 各種API連携による高度なAIアシスタント</p>
+        </div>
+        
+        <div class="content">
+            <div class="mermaid-section">
+                <h3>🔄 LangGraphワークフロー構造</h3>
+                <div class="mermaid-container">
+                    <div class="mermaid">
+                        graph TD
+                            global_start[_start_] --> supervisor_start[_start_]
+
+                            subgraph supervisor_box [Supervisor]
+                                supervisor_start[_start_]
+                                supervisor_agent[agent]
+                                supervisor_tools[tools]
+                                supervisor_end((_end_))
+                                
+                                supervisor_start -- "supervisor" --> supervisor_agent
+                                supervisor_agent -.-> supervisor_tools
+                                supervisor_tools -.-> supervisor_agent
+                                supervisor_agent -.-> supervisor_end
+                            end
+
+                            %% Connections from supervisor to expert subgraphs
+                            supervisor_start --> math_expert_start[_start_]
+                            supervisor_start --> music_expert_start[_start_]
+                            supervisor_start --> research_expert_start[_start_]
+                            supervisor_start --> restaurant_expert_start[_start_]
+                            supervisor_start --> scheduler_expert_start[_start_]
+                            supervisor_start --> travel_expert_start[_start_]
+                            supervisor_start --> video_expert_start[_start_]
+
+                            %% Connections from supervisor_end to expert_end nodes
+                            supervisor_end -.-> math_expert_end[_end_]
+                            supervisor_end -.-> music_expert_end[_end_]
+                            supervisor_end -.-> research_expert_end[_end_]
+                            supervisor_end -.-> restaurant_expert_end[_end_]
+                            supervisor_end -.-> scheduler_expert_end[_end_]
+                            supervisor_end -.-> travel_expert_end[_end_]
+                            supervisor_end -.-> video_expert_end[_end_]
+
+                            subgraph math_expert [math_expert]
+                                math_expert_start[_start_]
+                                math_expert_agent[agent]
+                                math_expert_end[_end_]
+                                math_expert_tools[tools]
+                                
+                                math_expert_start --> math_expert_agent
+                                math_expert_agent -.-> math_expert_tools
+                                math_expert_tools -.-> math_expert_agent
+                                math_expert_agent -.-> math_expert_end
+                            end
+
+                            subgraph music_expert [music_expert]
+                                music_expert_start[_start_]
+                                music_expert_agent[agent]
+                                music_expert_end[_end_]
+                                music_expert_tools[tools]
+                                
+                                music_expert_start --> music_expert_agent
+                                music_expert_agent -.-> music_expert_tools
+                                music_expert_tools -.-> music_expert_agent
+                                music_expert_agent -.-> music_expert_end
+                            end
+
+                            subgraph research_expert [research_expert]
+                                research_expert_start[_start_]
+                                research_expert_agent[agent]
+                                research_expert_end[_end_]
+                                research_expert_tools[tools]
+                                
+                                research_expert_start --> research_expert_agent
+                                research_expert_agent -.-> research_expert_tools
+                                research_expert_tools -.-> research_expert_agent
+                                research_expert_agent -.-> research_expert_end
+                            end
+
+                            subgraph restaurant_expert [restaurant_expert]
+                                restaurant_expert_start[_start_]
+                                restaurant_expert_agent[agent]
+                                restaurant_expert_end[_end_]
+                                restaurant_expert_tools[tools]
+                                
+                                restaurant_expert_start --> restaurant_expert_agent
+                                restaurant_expert_agent -.-> restaurant_expert_tools
+                                restaurant_expert_tools -.-> restaurant_expert_agent
+                                restaurant_expert_agent -.-> restaurant_expert_end
+                            end
+
+                            subgraph scheduler_expert [scheduler_expert]
+                                scheduler_expert_start[_start_]
+                                scheduler_expert_agent[agent]
+                                scheduler_expert_end[_end_]
+                                scheduler_expert_tools[tools]
+                                
+                                scheduler_expert_start --> scheduler_expert_agent
+                                scheduler_expert_agent -.-> scheduler_expert_tools
+                                scheduler_expert_tools -.-> scheduler_expert_agent
+                                scheduler_expert_agent -.-> scheduler_expert_end
+                            end
+
+                            subgraph travel_expert [travel_expert]
+                                travel_expert_start[_start_]
+                                travel_expert_agent[agent]
+                                travel_expert_end[_end_]
+                                travel_expert_tools[tools]
+                                
+                                travel_expert_start --> travel_expert_agent
+                                travel_expert_agent -.-> travel_expert_tools
+                                travel_expert_tools -.-> travel_expert_agent
+                                travel_expert_agent -.-> travel_expert_end
+                            end
+
+                            subgraph video_expert [video_expert]
+                                video_expert_start[_start_]
+                                video_expert_agent[agent]
+                                video_expert_end[_end_]
+                                video_expert_tools[tools]
+                                
+                                video_expert_start --> video_expert_agent
+                                video_expert_agent -.-> video_expert_tools
+                                video_expert_tools -.-> video_expert_agent
+                                video_expert_agent -.-> video_expert_end
+                            end
+                    </div>
+                </div>
+            </div>
+            
+            <div class="architecture-diagram">
+                <div class="user-section">
+                    <h3>👤 ユーザー</h3>
+                    <p>自然言語での質問・依頼</p>
+                    <ul>
+                        <li>音楽検索</li>
+                        <li>レストラン検索</li>
+                        <li>スケジュール管理</li>
+                        <li>旅行計画</li>
+                        <li>動画検索</li>
+                    </ul>
+                </div>
+                
+                <div class="supervisor-section">
+                    <h3>🎯 スーパーバイザー</h3>
+                    <p>リクエスト分析・タスク振り分け</p>
+                    <ul>
+                        <li>自然言語理解</li>
+                        <li>エージェント選択</li>
+                        <li>結果統合</li>
+                        <li>レスポンス生成</li>
+                    </ul>
+                </div>
+                
+                <div class="agents-section">
+                    <h3>🔧 専門エージェント</h3>
+                    <div class="agents-grid">
+                        <div class="agent-card">
+                            <h4>🎵 音楽エージェント</h4>
+                            <p>Spotify API連携<br>楽曲・アーティスト検索</p>
+                        </div>
+                        <div class="agent-card">
+                            <h4>🍽️ レストランエージェント</h4>
+                            <p>ホットペッパーグルメ<br>Googleマップ連携</p>
+                        </div>
+                        <div class="agent-card">
+                            <h4>🗓️ スケジューラーエージェント</h4>
+                            <p>Googleカレンダー<br>予定管理</p>
+                        </div>
+                        <div class="agent-card">
+                            <h4>🎬 動画エージェント</h4>
+                            <p>YouTube API<br>動画検索・情報取得</p>
+                        </div>
+                        <div class="agent-card">
+                            <h4>🏨 旅行エージェント</h4>
+                            <p>じゃらん・Airbnb<br>宿泊施設検索</p>
+                        </div>
+                        <div class="agent-card">
+                            <h4>🔍 研究エージェント</h4>
+                            <p>Tavily検索<br>Web情報収集</p>
+                        </div>
+                        <div class="agent-card">
+                            <h4>🧮 数学エージェント</h4>
+                            <p>計算処理<br>数式解析</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <h3>🔌 外部API連携</h3>
+                <div class="api-grid">
+                    <div class="api-card">
+                        <h5>🎵 Spotify</h5>
+                        <p>楽曲検索・プレイリスト</p>
+                    </div>
+                    <div class="api-card">
+                        <h5>🍽️ ホットペッパーグルメ</h5>
+                        <p>レストラン検索・予約</p>
+                    </div>
+                    <div class="api-card">
+                        <h5>🗓️ Googleカレンダー</h5>
+                        <p>予定管理・スケジュール</p>
+                    </div>
+                    <div class="api-card">
+                        <h5>🎬 YouTube</h5>
+                        <p>動画検索・情報取得</p>
+                    </div>
+                    <div class="api-card">
+                        <h5>🏨 じゃらん・Airbnb</h5>
+                        <p>宿泊施設検索</p>
+                    </div>
+                    <div class="api-card">
+                        <h5>🔍 Tavily</h5>
+                        <p>Web検索・情報収集</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ui-section">
+                <h3>💻 ユーザーインターフェース</h3>
+                <div class="ui-grid">
+                    <div class="ui-card">
+                        <h5>🌐 Streamlit Web UI</h5>
+                        <p>モダンなWebインターフェース<br>埋め込みプレイヤー・地図表示</p>
+                    </div>
+                    <div class="ui-card">
+                        <h5>⌨️ CLI</h5>
+                        <p>コマンドラインインターフェース<br>対話的な操作</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="features-section">
+                <h3>✨ 主要機能</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4>🎵 音楽機能</h4>
+                        <ul>
+                            <li>楽曲検索（Spotify）</li>
+                            <li>アーティスト情報取得</li>
+                            <li>プレイリスト表示</li>
+                            <li>埋め込み再生プレイヤー</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🍽️ レストラン機能</h4>
+                        <ul>
+                            <li>エリア・ジャンル検索</li>
+                            <li>動的エリアコード検索</li>
+                            <li>Googleマップ連携</li>
+                            <li>予約状況確認</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🗓️ スケジュール機能</h4>
+                        <ul>
+                            <li>自然言語予定追加</li>
+                            <li>Googleカレンダー連携</li>
+                            <li>相対日付変換</li>
+                            <li>予定管理</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎬 動画機能</h4>
+                        <ul>
+                            <li>YouTube動画検索</li>
+                            <li>動画詳細情報取得</li>
+                            <li>関連動画推薦</li>
+                            <li>統計データ表示</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🏨 旅行機能</h4>
+                        <ul>
+                            <li>じゃらんホテル検索</li>
+                            <li>Airbnb宿泊施設検索</li>
+                            <li>価格・評価比較</li>
+                            <li>予約情報取得</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔍 検索・計算機能</h4>
+                        <ul>
+                            <li>Web検索（Tavily）</li>
+                            <li>数学計算</li>
+                            <li>現在時刻取得</li>
+                            <li>情報収集・分析</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tech-stack">
+                <h3>🛠️ 技術スタック</h3>
+                <div class="tech-grid">
+                    <div class="tech-item">LangGraph</div>
+                    <div class="tech-item">LangChain</div>
+                    <div class="tech-item">Streamlit</div>
+                    <div class="tech-item">OpenAI GPT-4</div>
+                    <div class="tech-item">Spotify API</div>
+                    <div class="tech-item">YouTube API</div>
+                    <div class="tech-item">Google APIs</div>
+                    <div class="tech-item">ホットペッパーAPI</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,30 @@
+{
+  "spotify_search": {
+    "command": "python",
+    "args": [
+      "./tools/mcp_server_spotify.py"
+    ],
+    "transport": "stdio"
+  },
+  "hotpepper_search": {
+    "command": "python",
+    "args": [
+      "./tools/mcp_server_hotpepper.py"
+    ],
+    "transport": "stdio"
+  },
+  "google_maps": {
+    "command": "python",
+    "args": [
+      "./tools/mcp_server_googlemaps.py"
+    ],
+    "transport": "stdio"
+  },
+  "search": {
+    "command": "python",
+    "args": [
+      "./tools/mcp_server_search.py"
+    ],
+    "transport": "stdio"
+  }
+}

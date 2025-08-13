@@ -1,135 +1,362 @@
-# LangGraph Agentic System Hub
+# 🚀 LangGraph Agentic System Hub
 
-🧠 A modular and extensible framework for building multi-agent LLM applications using LangGraph and MCP tools.
+> **統合型AIエージェントシステム** - LangGraphとMCPツールを活用したマルチエージェント・マルチインターフェースフレームワーク
 
----
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![LangGraph](https://img.shields.io/badge/LangGraph-Latest-green.svg)](https://langchain-ai.github.io/langgraph/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Latest-teal.svg)](https://streamlit.io)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Latest-red.svg)](https://fastapi.tiangolo.com/)
+[![MCP](https://img.shields.io/badge/MCP-Protocol-orange.svg)](https://modelcontextprotocol.io)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-purple.svg)](https://openai.com)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-orange.svg)](https://openai.com)
+[![Anthropic](https://img.shields.io/badge/Anthropic-Claude--3--5--sonnet-teal.svg)](https://anthropic.com)
+[![Anthropic](https://img.shields.io/badge/Anthropic-Claude--3--7--sonnet-indigo.svg)](https://anthropic.com)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## 🔥 Overview
+## 📋 目次
 
-This project provides a **LangGraph-based agentic architecture** that integrates various tools (e.g. weather, Spotify, Google Maps, etc.) via **MCP (Model Context Protocol)** to enable intelligent and dynamic task execution.
+- [🎯 概要](#概要)
+- [🏗️ システム構成](#システム構成)
+- [🔧 コンポーネント詳細](#コンポーネント詳細)
+- [🤖 マルチエージェントシステム](#マルチエージェントシステム)
+- [⚙️ セットアップ](#セットアップ)
+- [🎮 使用方法](#使用方法)
+- [🔌 API統合](#api統合)
+- [🔧 トラブルシューティング](#トラブルシューティング)
+- [📝 ライセンス](#ライセンス)
 
-The repository contains **three main components**:
+## 🎯 概要
 
-1. **🎯 Simple ReAct Agent** (`simple-agent-mcp/`)
-   - Single ReAct agent that integrates MCP tools
-   - Basic functionality like Spotify, web search, time retrieval
-   - Command-line interface
+LangGraph Agentic System Hubは、**LangGraphベースのエージェントアーキテクチャ**を提供し、**MCP（Model Context Protocol）** ツールを統合して、インテリジェントで動的なタスク実行を可能にする統合システムです。
 
-2. **🌐 Streamlit MCP Server Interface** (`streamlit-mcp-server-src/`)
-   - User-friendly web interface with ReAct agent
-   - Dynamic MCP tool management
-   - Real-time streaming responses
+### 🌟 主な特徴
 
-3. **🔌 FastAPI Multi-Agent Extensible API** (`uv-agent-api/`)
-   - LangGraph StateGraph-based agent system
-   - Extensible architecture for multi-agent systems with RESTful API access
+- **🤖 マルチエージェント**: 7つの専門エージェントが協調動作
+- **💻 マルチインターフェース**: CLI、GUI、API、MCP統合
+- **🔧 モジュラー設計**: 拡張可能で再利用可能なコンポーネント
+- **🎯 専門分野**: 各エージェントが特定のタスクに特化
+- **🔄 自動振り分け**: スーパーバイザーが最適なエージェントを自動選択
+- **🤖 多モデル対応**: OpenAI GPT-4o、Anthropic Claude-3シリーズ対応
 
-It is designed to support:
-- 🗺️ Weekend spot planning with web search & map tools
-- 🍻 Party venue search with availability checks (HotPepper, Tabelog)
-- 🎧 Spotify music search & playback based on requests
-- ✅ Task management using calendar & to-do tools
-- 🎯 A unified orchestrator to route tasks to the best agent
+## 🎮 デモ
 
----
+### 🎥 デモ動画
 
-## 🏗️ Project Structure
+<div align="center">
 
-```txt
+<!-- メイン動画（MP4）- 高品質版 -->
+https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_en.mp4
+https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_ja.mp4
+
+**🎬 マルチエージェントシステムの動作デモ（高品質版）**
+
+<!-- 軽量版（GIF）- 互換性重視 -->
+![Demo Animation](./src/langgraph-supervisor/assets/demo_en.gif)
+![Demo Animation](./src/langgraph-supervisor/assets/demo_ja.gif)
+
+**🎬 マルチエージェントシステムの動作デモ（軽量版）**
+
+*音楽検索、レストラン検索、スケジュール管理など、複数の専門エージェントが協調して動作する様子をご覧いただけます。*
+
+<!-- 直接ファイル参照 -->
+![Demo Video](./src/langgraph-supervisor/assets/demo.mp4)
+
+</div>
+
+### 🌐 Webアプリケーション
+
+マルチエージェントシステムのWebインターフェースを体験できます：
+
+![Multi-Agent Web Application](./src/langgraph-supervisor/assets/web_gui.png)
+
+#### 🚀 起動方法
+
+```bash
+# GUIディレクトリに移動
+cd src/langgraph-supervisor/gui
+
+# 英語版アプリケーション起動
+streamlit run streamlit_app_en.py
+
+# 日本語版アプリケーション起動
+streamlit run streamlit_app.py
+
+# ポート指定で起動（例：8501）
+streamlit run streamlit_app_en.py --server.port 8501
+
+# 外部アクセス許可で起動
+streamlit run streamlit_app_en.py --server.address 0.0.0.0
+```
+
+#### ✨ 主な機能
+
+- **🤖 7つの専門エージェント**: 自動選択または手動選択
+- **💬 リアルタイムチャット**: 自然な対話形式
+- **📊 結果可視化**: レストラン、音楽、動画などの検索結果
+- **🎯 クイックアクション**: ワンクリックでエージェント切り替え
+- **📈 アナリティクス**: 会話履歴とパフォーマンス分析
+- **⚙️ デバッグモード**: 詳細な処理情報表示
+
+#### 🎯 使用例
+
+```
+ユーザー: "渋谷でイタリアンを探して、ビートルズの曲も教えて"
+→ システム: 自動的にRestaurant AgentとMusic Agentを選択
+→ 結果: レストラン情報 + Spotify埋め込みプレイヤー
+```
+
+## 🏗️ システム構成
+
+このリポジトリは**4つの主要コンポーネント**で構成されています：
+
+### 📁 プロジェクト構造
+
+```
 langgraph-agentic-system-hub/
-├── README.md
-├── requirements.txt
-├── main.py
-│
-├── src/
-│   ├── simple-agent-mcp/                # シンプルなAgent + MCP構成
-│   │   ├── planner_agent.py             # メインエージェント
-│   │   └── tools/                       # MCPサーバー群
+├── 📁 src/
+│   ├── 📁 simple-agent-mcp/           # シンプルなReActエージェント
+│   │   ├── planner_agent.py          # メインエージェント
+│   │   └── 📁 tools/                 # MCPサーバー群
 │   │       ├── mcp_server_time.py
 │   │       ├── mcp_server_search.py
 │   │       └── mcp_server_spotify.py
 │   │
-│   ├── streamlit-mcp-server-src/        # StreamlitベースのMCPサーバーUI
-│   │   ├── app_onlygpt_ken.py
-│   │   ├── mcp_server_time.py
-│   │   ├── mcp_server_search.py
-│   │   ├── mcp_server_spotify.py
-│   │   ├── mcp_server_googlemaps.py
-│   │   ├── mcp_server_rag.py
-│   │   ├── config.json
-│   │   └── utils.py
+│   ├── 📁 streamlit-mcp-server-src/   # StreamlitベースのMCPサーバーUI
+│   │   ├── 📁 mcp_chat/              # MCPチャットアプリケーション
+│   │   │   ├── main.py               # メイン実行ファイル
+│   │   │   ├── app.py                # 基本アプリケーション
+│   │   │   ├── config.json           # 設定ファイル
+│   │   │   ├── utils.py              # ユーティリティ関数
+│   │   │   └── 📁 tools/             # MCPサーバー群
+│   │   │       ├── mcp_server_time.py    # 時刻サーバー
+│   │   │       ├── mcp_server_search.py  # 検索サーバー
+│   │   │       ├── mcp_server_spotify.py # Spotifyサーバー
+│   │   │       ├── mcp_server_googlemaps.py # Google Mapsサーバー
+│   │   │       ├── mcp_server_rag.py     # RAGサーバー
+│   │   │       └── mcp_server_weather.py # 天気サーバー
+│   │   │
+│   │   └── 📁 mcp_integration/       # MCP統合アプリケーション
+│   │       ├── app_integrated_main.py # メイン実行ファイル
+│   │       ├── app.py                # 基本アプリケーション
+│   │       ├── requirements_app_integrated.txt # 依存関係
+│   │       ├── README.md             # 詳細ドキュメント
+│   │       ├── config.json           # 設定ファイル
+│   │       ├── utils.py              # ユーティリティ関数
+│   │       └── 📁 tools/             # MCPサーバー群
+│   │           ├── mcp_server_time.py    # 時刻サーバー
+│   │           ├── mcp_server_spotify.py # Spotifyサーバー
+│   │           ├── mcp_server_googlemaps.py # Google Mapsサーバー
+│   │           ├── mcp_server_hotpepper.py # HotPepperサーバー
+│   │           └── mcp_server_search.py  # 検索サーバー
 │   │
-│   └── uv-agent-api/                    # FastAPIベースのエージェントAPI
-│       ├── uv_api_agent.py
-│       ├── uv_api_main.py
-│       └── uv_api_client.py
+│   ├── 📁 uv-agent-api/               # FastAPIベースのエージェントAPI
+│   │   ├── uv_api_agent.py
+│   │   ├── uv_api_main.py
+│   │   └── uv_api_client.py
+│   │
+│   └── 📁 langgraph-supervisor/       # 🆕 マルチエージェントスーパーバイザー
+│       ├── 📁 cli/                   # コマンドラインインターフェース
+│       │   ├── main.py               # メイン実行ファイル
+│       │   ├── supervisor_workers_multiagents.py
+│       │   ├── example_usage.py
+│       │   └── workflow.png          # ワークフロー図
+│       │
+│       ├── 📁 gui/                   # グラフィカルユーザーインターフェース
+│       │   ├── app_integrated.py     # メインGUIアプリケーション
+│       │   ├── example_app_integrated.py
+│       │   └── requirements_app_integrated.txt
+│       │
+│       ├── 📁 mcp_servers/           # MCPサーバー実装
+│       │   ├── mcp_server_spotify.py
+│       │   ├── mcp_server_hotpepper.py
+│       │   ├── mcp_server_googlemaps.py
+│       │   └── mcp_server_search.py
+│       │
+│       └── README.md                 # 詳細ドキュメント
 │
-└── docs/
-    └── architecture.png
+├── 📁 docs/
+│   └── architecture.png
+├── requirements.txt
+└── README.md
 ```
 
----
+## 🔧 コンポーネント詳細
 
-## 🔧 Requirements
+### 1. 🎯 Simple ReAct Agent (`simple-agent-mcp/`)
 
-```txt
-# LangChain Related
-langchain==0.3.13
-langchain-community==0.3.13
-langchain-core==0.3.40
-langchain-google-community==2.0.3
-langchain-google-genai==2.0.11
-langchain-openai==0.2.6
-langchain-text-splitters==0.3.4
-langgraph==0.2.45
+**シンプルなReActエージェント** - MCPツールを統合した単一のReActエージェント
 
-# LLM Related
-openai==1.54.3
-anthropic==0.52.1
-google-ai-generativelanguage==0.6.16
+#### 特徴
+- **MCPツール統合**: 複数のMCPサーバーとの統合
+- **ReAct推論**: ツール使用と推論の組み合わせ
+- **シンプルな対話**: コマンドラインでの直接対話
+- **基本機能**: 音楽検索、Web検索、時刻取得
 
-# Data Processing & Analysis
-pandas==2.2.3
-numpy==1.26.4
-scikit-learn==1.6.1
-scipy==1.15.2
-
-# Web Related
-fastapi==0.115.11
-uvicorn==0.34.0
-streamlit==1.45.1
-flask==3.1.0
-flask-cors==5.0.1
-
-# Utilities
-python-dotenv==1.0.1
-pydantic==2.9.2
-pydantic-settings==2.7.0
-tqdm==4.67.0
-```
-
-You can install all dependencies at once with:
+#### 使用例
 ```bash
+# MCPサーバー起動
+python src/simple-agent-mcp/tools/mcp_server_spotify.py
+python src/simple-agent-mcp/tools/mcp_server_search.py
+python src/simple-agent-mcp/tools/mcp_server_time.py
+
+# エージェント起動
+python src/simple-agent-mcp/planner_agent.py
+```
+
+### 2. 🌐 Streamlit MCP Server Interface (`streamlit-mcp-server-src/`)
+
+**ユーザーフレンドリーなWebインターフェース** - MCPツールとReActエージェントの統合
+
+#### 特徴
+- **🎯 ReActエージェント**: 複数ツールを使用するインテリジェントエージェント
+- **🔧 動的ツール管理**: WebインターフェースでのMCPツール追加・設定
+- **🗺️ Google Maps統合**: ルート検索、場所検索、ジオコーディング
+- **🔍 Web検索**: Tavily検索APIによる高度な検索
+- **🎵 Spotify統合**: 音楽検索・推薦
+- **⏰ 時刻サービス**: 異なるタイムゾーンの現在時刻
+- **📚 RAGサポート**: ドキュメントベースの質問応答
+- **🔐 認証システム**: セキュアアクセスのためのログイン機能
+- **💬 リアルタイムストリーミング**: ツール呼び出し情報付きのライブレスポンス
+
+#### フォルダ構成
+- **📁 mcp_chat/**: MCPチャットアプリケーション（ReActエージェント）
+- **📁 mcp_integration/**: MCP統合アプリケーション（統合機能）
+
+#### 使用例
+```bash
+# MCPチャットアプリケーション
+cd src/streamlit-mcp-server-src/mcp_chat
+streamlit run main.py
+
+# MCP統合アプリケーション
+cd src/streamlit-mcp-server-src/mcp_integration
+streamlit run app_integrated_main.py
+```
+
+### 3. 🔌 FastAPI Multi-Agent Extensible API (`uv-agent-api/`)
+
+**LangGraph StateGraphベースのエージェントシステム** - 拡張可能なアーキテクチャ
+
+#### 特徴
+- **StateGraphベース**: LangGraphによる状態管理
+- **RESTful API**: 標準HTTPエンドポイント
+- **プログラムアクセス**: 既存アプリケーションとの簡単統合
+- **会話管理**: 組み込みの会話履歴と状態管理
+- **スケーラブルアーキテクチャ**: パフォーマンス向上のためのクライアント-サーバー分離
+
+#### 使用例
+```bash
+# サーバー起動
+cd src/uv-agent-api
+uvicorn uv_api_main:app --reload --port 8001
+
+# クライアント使用
+python uv_api_client.py
+```
+
+### 4. 🤖 マルチエージェントスーパーバイザー (`langgraph-supervisor/`) 🆕
+
+**7つの専門エージェントが協調する高度なマルチエージェントシステム**
+
+#### 特徴
+- **🤖 マルチエージェント**: 7つの専門エージェントが協調動作
+- **🎯 専門分野**: 各エージェントが特定のタスクに特化
+- **🔄 自動振り分け**: スーパーバイザーが最適なエージェントを自動選択
+- **💻 多様なインターフェース**: CLI、GUI、MCPツール統合
+- **🤖 多モデル対応**: OpenAI GPT-4o、Anthropic Claude-3シリーズ対応
+
+#### エージェント構成
+
+<div align="center">
+
+#### 🎯 スーパーバイザー層
+**Task Router & Coordinator** - リクエスト解析・エージェント選択・結果統合
+
+#### 🤖 エージェント層
+
+| エージェント | 専門分野 | 対応API | 主要機能 |
+|-------------|---------|---------|----------|
+| 📅 **Scheduler Agent** | スケジュール管理 | Google Calendar API | 予定追加・管理・相対日付処理 |
+| 🎵 **Music Agent** | 音楽検索・推薦 | Spotify API | 楽曲・アーティスト・プレイリスト検索 |
+| 🍽️ **Restaurant Agent** | レストラン検索 | HotPepper + Google Maps | 統合検索・評価・地図表示 |
+| 🎬 **Video Agent** | 動画検索 | YouTube Data API | 動画検索・情報取得・メタデータ |
+| 🏨 **Travel Agent** | 旅行プランニング | Jalan.net + Airbnb | ホテル・宿泊施設検索 |
+| 🔢 **Math Agent** | 数学計算 | - | 高度な数学処理・計算 |
+| 🔍 **Research Agent** | 情報収集 | Tavily Search | Web検索・リサーチ・情報整理 |
+
+</div>
+
+#### 使用例
+```bash
+# CLIインターフェース
+python src/langgraph-supervisor/cli/main.py
+
+# GUIインターフェース
+streamlit run src/langgraph-supervisor/gui/app_integrated.py
+
+# スクリプト実行
+python -c "
+from src.langgraph-supervisor.cli.supervisor_workers_multiagents import app
+result = app.invoke({'messages': [{'role': 'user', 'content': '明日の15時に会議を予定に入れて'}]})
+print(result['messages'][-1]['content'])
+"
+```
+
+## 🤖 マルチエージェントシステム
+
+### ワークフロー図
+
+![Multi-Agent Workflow](src/langgraph-supervisor/cli/workflow.png)
+
+### スーパーバイザーの役割
+
+スーパーバイザーは以下の機能を提供します：
+
+<div align="center">
+
+| 🎯 **タスク分析** | 🤖 **エージェント選択** | 🔄 **協調管理** |
+|-------------------|-------------------------|-----------------|
+| ユーザーのリクエストを分析 | 最適な専門エージェントを自動選択 | 複数エージェントの協調動作を管理 |
+
+| 📊 **結果統合** | ⚡ **パフォーマンス最適化** |
+|-----------------|---------------------------|
+| 各エージェントの結果を統合・整理 | 効率的なタスク実行 |
+
+</div>
+
+### エージェント間の協調
+
+```
+ユーザーリクエスト → スーパーバイザー → 専門エージェント選択 → タスク実行 → 結果統合 → レスポンス
+```
+
+## ⚙️ セットアップ
+
+### 1. 環境要件
+
+```bash
+Python 3.8+
+Streamlit 1.28+ (GUI使用時)
+```
+
+### 2. 依存関係のインストール
+
+```bash
+# 基本依存関係
 pip install -r requirements.txt
+
+# マルチエージェントシステム用
+pip install -r src/langgraph-supervisor/requirements.txt
+
+# GUI使用時
+pip install -r src/langgraph-supervisor/gui/requirements_app_integrated.txt
 ```
 
----
+### 3. 環境変数の設定
 
-## 🚀 Getting Started
+`.env`ファイルを作成し、以下のAPIキーを設定：
 
-### 1. Clone & install dependencies
-
-```bash
-git clone https://github.com/kenji/langgraph-agentic-system-hub.git
-cd langgraph-agentic-system-hub
-pip install -r requirements.txt
-```
-
-### 2. Environment Setup
-
-Create a `.env` file in the root directory with the following variables:
-
-```bash
+```env
 # ===== LLM API Keys =====
 OPENAI_API_KEY=your_openai_api_key_here
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
@@ -144,10 +371,18 @@ SPOTIFY_TOKEN=your_spotify_token_here
 SPOTIFY_CLIENT_ID=your_spotify_client_id_here
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret_here
 
-# Google Maps API (for location services)
+# Google APIs
 GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
+GOOGLE_SERVICE_ACCOUNT_FILE=path/to/service_account.json
+GOOGLE_CALENDAR_ID=your_calendar_id
 
-# Google Search API (for web search in uv-agent-api)
+# HotPepper Gourmet API
+RECRUIT_API_KEY=your_recruit_api_key
+
+# YouTube API
+YOUTUBE_API_KEY=your_youtube_api_key
+
+# Google Search API (for uv-agent-api)
 GOOGLE_API_KEY=your_google_api_key_here
 GOOGLE_CSE_ID=your_google_cse_id_here
 
@@ -158,283 +393,276 @@ USER_ID=your_username
 USER_PASSWORD=your_password
 ```
 
-#### How to Get API Keys
+### 4. APIキーの取得方法
 
-1. **OpenAI API Key**: [OpenAI Platform](https://platform.openai.com/api-keys)
-2. **Anthropic API Key**: [Anthropic Console](https://console.anthropic.com/)
-3. **Tavily API Key**: [Tavily](https://tavily.com/)
-4. **Spotify API**: [Spotify Developer Dashboard](https://developer.spotify.com/)
-5. **Google Maps API**: [Google Cloud Console](https://console.cloud.google.com/)
-6. **Google Search API**: [Google Custom Search](https://developers.google.com/custom-search)
+<div align="center">
 
-### 3. Available Tools
+| API | 取得方法 | リンク |
+|-----|----------|--------|
+| **OpenAI API** | OpenAIアカウントでAPIキーを生成 | [OpenAI Platform](https://platform.openai.com/api-keys) |
+| **Anthropic API** | AnthropicアカウントでAPIキーを生成 | [Anthropic Console](https://console.anthropic.com/) |
+| **Tavily API** | Tavilyで無料アカウントを作成 | [Tavily API](https://tavily.com/) |
+| **Google Custom Search** | Google Cloud ConsoleでCustom Search APIを有効化 | [Google Custom Search](https://developers.google.com/custom-search/v1/overview) |
+| **Google Maps API** | Google Cloud ConsoleでMaps APIを有効化 | [Google Maps Platform](https://developers.google.com/maps/documentation/javascript/get-api-key) |
+| **Hotpepper API** | リクルートWEBサービスでアカウントを作成 | [Hotpepper API](https://webservice.recruit.co.jp/doc/hotpepper/) |
+| **Spotify API** | Spotify Developerでアプリを作成 | [Spotify Developer](https://developer.spotify.com/documentation/web-api) |
 
-#### 🗺️ Google Maps API
-- Route search and directions
-- Place search with ratings and business hours
-- Geocoding (address to coordinates)
-- Reverse geocoding (coordinates to address)
+</div>
 
-#### 🔍 Web Search
-- Advanced web search with Tavily API
-- Configurable search depth
-- Rich search results with URLs
+## 🎮 使用方法
 
-#### 🎵 Spotify Search
-- Music search and recommendations
-- Artist and album information
-- Track details and audio features
-
-#### ⏰ Time Service
-- Current time for any timezone
-- Timezone conversion
-- Formatted time output
-
-#### 📚 RAG (Retrieval-Augmented Generation)
-- Document-based question answering
-- PDF document processing
-- Context-aware responses
-
-### 4. Choose Your Component
-
-This repository provides three independent implementations:
-
----
-
-## 🎯 Component 1: Simple ReAct Agent
-
-### Overview
-
-The **Simple ReAct Agent** is a single ReAct agent that integrates MCP tools. It uses LangGraph's `create_react_agent` to provide basic functionality like Spotify, web search, and time retrieval.
-
-### Quick Start
-
-#### 1. Run MCP Tool Servers
-
-Start the required MCP servers:
+### 🖥️ CLI インターフェース（マルチエージェント）
 
 ```bash
-# Terminal 1: Spotify MCP Server
-python src/simple-agent-mcp/tools/mcp_server_spotify.py
+# マルチエージェントシステムの起動
+python src/langgraph-supervisor/cli/main.py
 
-# Terminal 2: Search MCP Server
-python src/simple-agent-mcp/tools/mcp_server_search.py
+# 対話モードで実行
+python src/langgraph-supervisor/cli/main.py --interactive
 
-# Terminal 3: Time MCP Server
-python src/simple-agent-mcp/tools/mcp_server_time.py
+# スクリプト実行
+python src/langgraph-supervisor/cli/main.py --script "明日の15時に会議を予定に入れて"
+
+# バッチ処理
+python src/langgraph-supervisor/cli/main.py --batch tasks.txt
 ```
 
-#### 2. Launch the Agent
+### 🌐 GUI インターフェース（マルチエージェント）
 
 ```bash
+# Streamlitアプリケーション起動
+streamlit run src/langgraph-supervisor/gui/app_integrated.py
+
+# ポート指定で起動
+streamlit run src/langgraph-supervisor/gui/app_integrated.py --server.port 8501
+
+# 外部アクセス許可で起動
+streamlit run src/langgraph-supervisor/gui/app_integrated.py --server.address 0.0.0.0
+```
+
+### 🎯 Simple ReAct Agent
+
+```bash
+# MCPサーバー起動
+python src/simple-agent-mcp/tools/mcp_server_spotify.py
+python src/simple-agent-mcp/tools/mcp_server_search.py
+python src/simple-agent-mcp/tools/mcp_server_time.py
+
+# エージェント起動
 python src/simple-agent-mcp/planner_agent.py
 ```
 
-### Features
-
-- **MCP Tool Integration**: Integration with multiple MCP servers
-- **ReAct Reasoning**: Combination of tool usage and reasoning
-- **Simple Interaction**: Direct conversation via command line
-- **Basic Features**: Music search, web search, time retrieval
-
-### Use Cases
-
-- Understanding MCP tool integration basics
-- Building simple AI assistants
-- CLI-based automation
-- Prototype development
-
----
-
-## 🌐 Component 2: Streamlit MCP Server Interface
-
-### Overview
-
-The **Streamlit MCP Server Interface** provides a user-friendly web-based interface for interacting with MCP tools through a ReAct agent. It's perfect for users who prefer a graphical interface and want to easily manage multiple tools.
-
-### Quick Start
+### 🌐 Streamlit Interface
 
 ```bash
-cd src/streamlit-mcp-server-src
-streamlit run app_onlygpt_ken.py
+# MCPチャットアプリケーション
+cd src/streamlit-mcp-server-src/mcp_chat
+streamlit run main.py
+
+# MCP統合アプリケーション
+cd src/streamlit-mcp-server-src/mcp_integration
+streamlit run app_integrated_main.py
 ```
 
-### Features
-
-- 🎯 **ReAct Agent**: Intelligent agent that can use multiple tools to answer questions
-- 🔧 **Dynamic Tool Management**: Add and configure MCP tools through the web interface
-- 🗺️ **Google Maps Integration**: Route search, place search, geocoding, and reverse geocoding
-- 🔍 **Web Search**: Powered by Tavily search API
-- 🎵 **Spotify Integration**: Music search and recommendations
-- ⏰ **Time Services**: Current time for different timezones
-- 📚 **RAG Support**: Document-based question answering
-- 🔐 **Optional Authentication**: Login system for secure access
-- 💬 **Real-time Streaming**: Live response streaming with tool call information
-
-### Advanced Features
-
-#### Authentication System
-
-Enable login protection by setting `USE_LOGIN=true` in `.env`:
+### 🔌 FastAPI Multi-Agent API
 
 ```bash
-USE_LOGIN=true
-USER_ID=your_username
-USER_PASSWORD=your_password
-```
-
-#### Model Selection
-
-Choose from multiple LLM models:
-- **Anthropic**: Claude 3.7 Sonnet, Claude 3.5 Sonnet, Claude 3.5 Haiku
-- **OpenAI**: GPT-4o, GPT-4o Mini
-
-#### Response Settings
-
-- **Timeout**: Adjust response generation time limit (60-300 seconds)
-- **Recursion Limit**: Control tool call recursion depth (10-200)
-- **Conversation Memory**: Automatic conversation history management
-
-### Use Cases
-
-- Interactive web-based AI assistance
-- Tool exploration and experimentation
-- User-friendly AI interface for non-technical users
-- Real-time AI interactions with visual feedback
-
----
-
-## 🔌 Component 3: FastAPI Multi-Agent Extensible API
-
-### Overview
-
-The **FastAPI Multi-Agent Extensible API** is a LangGraph StateGraph-based agent system. While currently implemented as a single agent, it has an extensible architecture that can be expanded to multi-agent systems in the future.
-
-### Quick Start
-
-#### 1. Start the Server
-
-```bash
+# サーバー起動
 cd src/uv-agent-api
 uvicorn uv_api_main:app --reload --port 8001
-```
 
-#### 2. Use the Client
-
-In another terminal:
-
-```bash
-cd src/uv-agent-api
+# クライアント使用
 python uv_api_client.py
 ```
 
-### API Endpoints
+## 🔌 API統合
 
-- `POST /ask` : Send a question and get the AI agent's response
-- `GET /history` : Retrieve conversation history
-- `DELETE /history` : Clear conversation history
+### 利用可能なツール
 
-### Integration Example
+#### 🗺️ Google Maps API
+- ルート検索と方向案内
+- 評価・営業時間付きの場所検索
+- ジオコーディング（住所→座標）
+- 逆ジオコーディング（座標→住所）
+
+#### 🔍 Web検索
+- Tavily APIによる高度なWeb検索
+- 設定可能な検索深度
+- URL付きの豊富な検索結果
+
+#### 🎵 Spotify検索
+- 音楽検索と推薦
+- アーティスト・アルバム情報
+- トラック詳細と音声特徴
+
+#### ⏰ 時刻サービス
+- 任意のタイムゾーンの現在時刻
+- タイムゾーン変換
+- フォーマットされた時刻出力
+
+#### 📚 RAG（Retrieval-Augmented Generation）
+- ドキュメントベースの質問応答
+- PDFドキュメント処理
+- コンテキストを考慮したレスポンス
+
+### マルチエージェントAPI統合例
 
 ```python
-import requests
+# 基本的な使用方法
+from src.langgraph-supervisor.cli.supervisor_workers_multiagents import app
 
-# Send a question to the agent
-response = requests.post("http://localhost:8001/ask", 
-                        json={"question": "What's the weather like in Tokyo?"})
-result = response.json()
-print(result["response"])
+# ユーザーリクエストの実行
+result = app.invoke({
+    "messages": [
+        {
+            "role": "user",
+            "content": "明日の15時に会議を予定に入れて"
+        }
+    ]
+})
 
-# Get conversation history
-history = requests.get("http://localhost:8001/history")
-print(history.json())
+print(result["messages"][-1]["content"])
 ```
 
-### Features
+## 🔄 コンポーネント比較
 
-- **StateGraph-based**: State management with LangGraph
-- **RESTful API**: Standard HTTP endpoints
-- **Programmatic Access**: Easy integration with existing applications
-- **Conversation Management**: Built-in conversation history and state management
-- **Scalable Architecture**: Client-server separation for better performance
+<div align="center">
 
-### Multi-Agent Extensibility
+| 機能 | Simple ReAct Agent | Streamlit Interface | FastAPI Multi-Agent API | マルチエージェントスーパーバイザー |
+|------|-------------------|-------------------|------------------------|--------------------------------|
+| **ユーザーインターフェース** | コマンドライン | Web UI | REST API | CLI, GUI, MCP |
+| **複雑さ** | 低（単一ReAct） | 中（ReAct） | 高（StateGraph） | 最高（マルチエージェント） |
+| **使用例** | 基本機能 | 対話型使用 | 統合・拡張 | 複雑なタスク処理 |
+| **セットアップ** | 複数サーバー | 単一アプリ | クライアント-サーバー | 統合システム |
+| **スケーラビリティ** | 低 | 中 | 高 | 最高 |
+| **学習曲線** | 緩やか | 緩やか | 急 | 中 |
+| **マルチエージェントサポート** | なし | なし | 拡張可能 | 完全対応 |
 
-While currently implemented as a single agent, it can be extended to multi-agent systems for the following reasons:
+</div>
 
-- **StateGraph Architecture**: Ability to add multiple nodes and edges
-- **State Management**: Flexible state management with `AgentState`
-- **Modular Design**: Easy addition of new agent nodes
+## 🧩 エージェントワークフロー例
 
-### Use Cases
-
-- Integration with existing web applications
-- Mobile app backends
-- Automated workflows and scripts
-- Custom AI interfaces
-- Microservices architecture
-- Foundation for multi-agent systems
-
----
-
-## 🔄 Component Comparison
-
-| Feature | Simple ReAct Agent | Streamlit Interface | FastAPI Multi-Agent API |
-|---------|-------------------|-------------------|------------------------|
-| **User Interface** | Command line | Web UI | REST API |
-| **Complexity** | Low (single ReAct) | Medium (ReAct) | High (StateGraph) |
-| **Use Case** | Basic functionality | Interactive use | Integration & Extension |
-| **Setup** | Multiple servers | Single app | Client-server |
-| **Scalability** | Low | Medium | High |
-| **Learning Curve** | Gentle | Gentle | Steep |
-| **Multi-Agent Support** | No | No | Extensible |
-
----
-
-## 🧩 Agentic Workflow Example
+### マルチエージェントシステム例
 
 ```txt
-User: "Find a place to go this weekend"
-→ Orchestrator: routes to "PlannerAgent"
-→ PlannerAgent: uses web search MCP
-→ Gets info from Google Maps MCP + HotPepper MCP
-→ Returns results to user via LangGraph
+ユーザー: "週末の予定を立てて、渋谷でイタリアンを探して、ビートルズの曲も教えて"
+→ スーパーバイザー: タスクを分析・分割
+→ Scheduler Agent: 週末の予定を管理
+→ Restaurant Agent: 渋谷のイタリアンを検索
+→ Music Agent: ビートルズの曲を検索
+→ スーパーバイザー: 結果を統合・整理
+→ ユーザー: 統合された結果を受信
 ```
 
-## 🔮 Future Plans
+### シンプルReActエージェント例
 
-- 🧠 Memory integration with LangChain memory
-- 🔍 RAG (Retrieval-Augmented Generation) for dynamic search
-- 📆 Google Calendar integration for automatic scheduling
-- 📎 Notion auto-summary feature
-- 🎤 Integration with YouTube audio separation tools
-- 💬 Prompt optimization for each agent
-- 🗺️ Visual workflow generation with LangGraph SDK
+```txt
+ユーザー: "週末に行く場所を探して"
+→ Orchestrator: "PlannerAgent"に振り分け
+→ PlannerAgent: Web検索MCPを使用
+→ Google Maps MCP + HotPepper MCPから情報取得
+→ LangGraph経由でユーザーに結果を返す
+```
 
-## ✨ Example Use Cases
+## 🔮 今後の計画
 
-| Use Case         | Description                                                                 |
-|------------------|-----------------------------------------------------------------------------|
-| 🎵 Music Search  | Search and recommend songs from Spotify based on user requests.              |
-| 🍺 Party Finder  | Find good venues and check availability based on number, date, and area.     |
-| 🌤 Weather Info  | Get weather information for current or specified locations and provide advice.|
-| 📆 Task Manager  | Manage schedules and ToDo lists via Google Calendar integration.             |
-| 📍 Outing Ideas  | Suggest popular weekend spots and get reviews.                               |
-| 🗺️ Route Planning| Get detailed directions and route information using Google Maps API.         |
-| 🔍 Web Research  | Perform comprehensive web searches for information gathering.                |
+- 🧠 LangChainメモリとの統合
+- 🔍 動的検索のためのRAG（Retrieval-Augmented Generation）
+- 📆 自動スケジュール管理のためのGoogle Calendar統合
+- 📎 Notion自動要約機能
+- 🎤 YouTube音声分離ツールとの統合
+- 💬 各エージェントのプロンプト最適化
+- 🗺️ LangGraph SDKによる視覚的ワークフロー生成
 
-## 👤 Author
+## ✨ 使用例
+
+<div align="center">
+
+| 使用例 | 説明 | 対応コンポーネント |
+|--------|------|-------------------|
+| 🎵 音楽検索 | ユーザーのリクエストに基づいてSpotifyから楽曲を検索・推薦 | 全コンポーネント |
+| 🍺 パーティ会場探し | 人数・日付・エリアに基づいて良い会場を探し、空き状況を確認 | マルチエージェント |
+| 🌤 天気情報 | 現在地または指定場所の天気情報を取得し、アドバイスを提供 | 全コンポーネント |
+| 📆 タスク管理 | Google Calendar統合によるスケジュールとToDoリスト管理 | マルチエージェント |
+| 📍 お出かけアイデア | 人気の週末スポットを提案し、レビューを取得 | 全コンポーネント |
+| 🗺️ ルート計画 | Google Maps APIを使用した詳細な方向案内とルート情報 | 全コンポーネント |
+| 🔍 Webリサーチ | 情報収集のための包括的なWeb検索 | 全コンポーネント |
+
+</div>
+
+## 🔧 トラブルシューティング
+
+### よくある問題
+
+#### 1. API認証エラー
+
+```bash
+# エラー: API credentials not configured
+# 解決: .envファイルにAPIキーを正しく設定
+echo "OPENAI_API_KEY=your_key" >> .env
+echo "ANTHROPIC_API_KEY=your_key" >> .env
+```
+
+#### 2. 依存関係エラー
+
+```bash
+# エラー: ModuleNotFoundError
+# 解決: 依存関係をインストール
+pip install -r requirements.txt
+pip install -r src/langgraph-supervisor/requirements.txt
+```
+
+#### 3. MCPサーバー接続エラー
+
+```bash
+# エラー: MCP server files not found
+# 解決: 必要なMCPサーバーファイルを配置
+ls -la src/langgraph-supervisor/mcp_servers/mcp_server_*.py
+```
+
+#### 4. ポート競合エラー
+
+```bash
+# エラー: Port already in use
+# 解決: 別のポートを使用
+streamlit run app.py --server.port 8502
+uvicorn main:app --port 8002
+```
+
+### デバッグモード
+
+```python
+# 詳細ログの有効化
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
+# 詳細なエラー情報を取得
+try:
+    result = app.invoke({"messages": [{"role": "user", "content": "test"}]})
+except Exception as e:
+    print(f"エラー詳細: {e}")
+    import traceback
+    traceback.print_exc()
+```
+
+## 👤 作者
 
 **Centaurus-Ken（[@ken-hori-2](https://github.com/ken-hori-2)）**
 
-A developer experimenting with Agentic AI systems using LangGraph × MCP.  
-From ideation to demo development and presentation, focusing on real-world use cases like music, weather, party planning, and schedule management.  
-Also experienced in edge AI model design, demo development, and CI/CD pipeline automation.
+LangGraph × MCPを使用したAgentic AIシステムの実験を行う開発者。  
+アイデアからデモ開発、プレゼンテーションまで、音楽、天気、パーティ企画、スケジュール管理などの実用的なユースケースに焦点を当てています。  
+エッジAIモデル設計、デモ開発、CI/CDパイプライン自動化の経験もあります。
 
-## 📄 License
+## 📄 ライセンス
 
 MIT License.
 
-Created by Centaurus-Ken for exploring next-gen LLM applications with modular tool orchestration.
+モジュラー型ツールオーケストレーションによる次世代LLMアプリケーションの探索のために、Centaurus-Kenによって作成されました。
 
 ---
+
+<div align="center">
+
+**⭐️ このプロジェクトが役に立ったら、スターを付けてください！**
+
+</div>
