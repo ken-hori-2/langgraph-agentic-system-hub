@@ -1,0 +1,55 @@
+# MCP Tool Utilization Agent System Dependencies
+
+# Core Framework
+streamlit>=1.28.0
+asyncio
+nest_asyncio>=1.5.0
+
+# LangChain & LangGraph
+langchain>=0.1.0
+langchain-openai>=0.1.0
+langchain-anthropic>=0.1.0
+langchain-core>=0.1.0
+langgraph>=0.1.0
+langchain-mcp-adapters>=0.1.0
+
+# LLM Providers
+openai>=1.0.0
+anthropic>=0.52.0
+
+# Environment & Configuration
+python-dotenv>=1.0.0
+
+# HTTP Requests & API
+requests>=2.31.0
+urllib3>=2.0.0
+
+# Data Processing
+pydantic>=2.0.0
+typing-extensions>=4.0.0
+
+# Platform Detection
+platform
+
+# JSON Processing
+json
+
+# URL Encoding
+urllib.parse
+
+# Regular Expressions
+re
+
+# Collections
+collections
+
+# Development & Testing
+pytest>=7.4.0
+black>=23.0.0
+flake8>=6.0.0
+
+# Optional: Additional MCP Servers
+# These may be needed depending on your MCP server implementations
+# spotipy>=2.23.0  # For Spotify MCP server
+# google-auth>=2.0.0  # For Google Maps MCP server
+# beautifulsoup4>=4.12.0  # For web scraping MCP servers 

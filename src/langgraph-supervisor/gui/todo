@@ -1,0 +1,11 @@
+ja, enの作成まで完了(enの方が良いUIかも)
+1. supervisorのguiにja, en共に実装し、READMEを作成
+2. app_integrate.pyと既存のREADMEはstreamlit-mcp-server-srcに移動
+3. git addでfeature/langgraph-supervisorブランチにpush
+
+(work_supervisorの方ではstreamlit run stream_app.py/streamlit_app_en.pyが動くので原因分析)
+
+4. 音源分離と指パッチンをAudioDNNに追加、README作成
+
+5. Keiba_WSの.venv環境をもとにrequirements.txtをwinで作成し、macで環境を再現
+6. 競馬予測のデモをmacで撮る
