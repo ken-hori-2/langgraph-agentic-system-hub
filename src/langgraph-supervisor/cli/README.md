@@ -419,7 +419,7 @@
 
 ### ワークフロー図
 
-![Multi-Agent Workflow](workflow.png)
+![Multi-Agent Workflow](../assets/workflow.png)
 
 **ワークフロー説明:**
 - **スーパーバイザー**: 中央の黄色いボックスで、全体のプロセスを調整

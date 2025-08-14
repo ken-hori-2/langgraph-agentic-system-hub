@@ -44,22 +44,46 @@ LangGraph Agentic System Hubは、**LangGraphベースのエージェントア�
 
 <div align="center">
 
-<!-- メイン動画（MP4）- 高品質版 -->
-https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_en.mp4
-https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_ja.mp4
+**🎬 マルチエージェントシステムの動作デモ**
 
-**🎬 マルチエージェントシステムの動作デモ（高品質版）**
+> 尺の都合上二つの動画に分けていますが、アプリを切り替えることなくそれぞれのユースケースに対応可能です。  
+> UIが英語版と日本語版で異なるのはわかりやすくするためと、試行錯誤中のためです。
+
+*音楽検索、レストラン検索、スケジュール管理など、複数の専門エージェントが協調して動作する様子をご覧いただけます。*
+
+---
+
+### 📹 デモ動画1: 居酒屋検索 × 音楽推薦
+
+> **「居酒屋と楽曲について質問し、supervisorが各専門家agentにタスクを振り分けた後、回答をまとめて生成している」**
+
+https://github.com/user-attachments/assets/90717585-5e53-492d-a558-035fe871605c
+
+*このデモでは、ユーザーが「渋谷でオシャレな居酒屋を探して、ミセスの曲を教えて」と質問すると、Restaurant AgentやMusic Agent等と協調して回答を生成します。*
+
+---
+
+### 📹 デモ動画2: 動画検索 × 天気情報
+
+> **「動画コンテンツと天気について質問し、supervisorが各専門家agentにタスクを振り分けて回答を生成している」**
+
+https://github.com/user-attachments/assets/d4fe73d3-727b-487c-9826-a6a18e4b2a79
+
+*このデモでは、ユーザーが「英語の勉強用の動画コンテンツを探して、明日の天気を教えて」と質問すると、Video AgentやWeather Agent等と協調して回答を生成します。*
+
+---
+
+### 🎞️ 軽量版デモ（GIF）
 
 <!-- 軽量版（GIF）- 互換性重視 -->
 ![Demo Animation](./src/langgraph-supervisor/assets/demo_en.gif)
 ![Demo Animation](./src/langgraph-supervisor/assets/demo_ja.gif)
 
-**🎬 マルチエージェントシステムの動作デモ（軽量版）**
+*軽量版のデモアニメーションです。ブラウザの互換性を重視したGIF形式で提供しています。*
 
-*音楽検索、レストラン検索、スケジュール管理など、複数の専門エージェントが協調して動作する様子をご覧いただけます。*
-
-<!-- 直接ファイル参照 -->
-![Demo Video](./src/langgraph-supervisor/assets/demo.mp4)
+<!-- 古い動画リンク（非表示） -->
+<!-- https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_en.mp4
+https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_ja.mp4 -->
 
 </div>
 
@@ -75,17 +99,17 @@ https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervi
 # GUIディレクトリに移動
 cd src/langgraph-supervisor/gui
 
-# 英語版アプリケーション起動
-streamlit run streamlit_app_en.py
-
 # 日本語版アプリケーション起動
 streamlit run streamlit_app.py
 
+# 英語版アプリケーション起動
+streamlit run streamlit_app_en.py
+
 # ポート指定で起動（例：8501）
-streamlit run streamlit_app_en.py --server.port 8501
+streamlit run streamlit_app.py --server.port 8501
 
 # 外部アクセス許可で起動
-streamlit run streamlit_app_en.py --server.address 0.0.0.0
+streamlit run streamlit_app.py --server.address 0.0.0.0
 ```
 
 #### ✨ 主な機能
@@ -156,23 +180,34 @@ langgraph-agentic-system-hub/
 │   │
 │   └── 📁 langgraph-supervisor/       # 🆕 マルチエージェントスーパーバイザー
 │       ├── 📁 cli/                   # コマンドラインインターフェース
-│       │   ├── main.py               # メイン実行ファイル
+│       │   ├── README.md             # CLI使用ガイド
 │       │   ├── supervisor_workers_multiagents.py
-│       │   ├── example_usage.py
-│       │   └── workflow.png          # ワークフロー図
+│       │   ├── requirements.txt
+│       │   └── architecture.html     # アーキテクチャ図
 │       │
 │       ├── 📁 gui/                   # グラフィカルユーザーインターフェース
-│       │   ├── app_integrated.py     # メインGUIアプリケーション
-│       │   ├── example_app_integrated.py
-│       │   └── requirements_app_integrated.txt
+│       │   ├── README.md             # GUI使用ガイド
+│       │   ├── streamlit_app.py      # 日本語版メインアプリケーション
+│       │   ├── streamlit_app_en.py   # 英語版メインアプリケーション
+│       │   ├── supervisor_workers_multiagents.py
+│       │   ├── requirements.txt
+│       │   ├── setup.sh              # macOS/Linux用セットアップスクリプト
+│       │   └── setup.bat             # Windows用セットアップスクリプト
 │       │
-│       ├── 📁 mcp_servers/           # MCPサーバー実装
-│       │   ├── mcp_server_spotify.py
-│       │   ├── mcp_server_hotpepper.py
-│       │   ├── mcp_server_googlemaps.py
-│       │   └── mcp_server_search.py
+│       ├── 📁 assets/                 # アセットファイル
+│       │   ├── demo_en.mp4           # 英語版デモ動画
+│       │   ├── demo_ja.mp4           # 日本語版デモ動画
+│       │   ├── demo_en.gif           # 英語版デモGIF
+│       │   ├── demo_ja.gif           # 日本語版デモGIF
+│       │   ├── demo.mp4              # 統合デモ動画
+│       │   ├── demo.gif              # 統合デモGIF
+│       │   ├── web_ja.png            # 日本語版Webアプリ画像
+│       │   ├── web_en.png            # 英語版Webアプリ画像
+│       │   ├── web_gui.png           # Webアプリ画像
+│       │   └── workflow.png          # ワークフロー図
 │       │
-│       └── README.md                 # 詳細ドキュメント
+│       ├── README.md                 # 詳細ドキュメント
+│       └── LICENSE                   # ライセンスファイル
 │
 ├── 📁 docs/
 │   └── architecture.png
@@ -289,10 +324,10 @@ python uv_api_client.py
 #### 使用例
 ```bash
 # CLIインターフェース
-python src/langgraph-supervisor/cli/main.py
+python src/langgraph-supervisor/cli/supervisor_workers_multiagents.py
 
 # GUIインターフェース
-streamlit run src/langgraph-supervisor/gui/app_integrated.py
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py
 
 # スクリプト実行
 python -c "
@@ -306,7 +341,7 @@ print(result['messages'][-1]['content'])
 
 ### ワークフロー図
 
-![Multi-Agent Workflow](src/langgraph-supervisor/cli/workflow.png)
+![Multi-Agent Workflow](src/langgraph-supervisor/assets/workflow.png)
 
 ### スーパーバイザーの役割
 
@@ -349,7 +384,7 @@ pip install -r requirements.txt
 pip install -r src/langgraph-supervisor/requirements.txt
 
 # GUI使用時
-pip install -r src/langgraph-supervisor/gui/requirements_app_integrated.txt
+pip install -r src/langgraph-supervisor/gui/requirements.txt
 ```
 
 ### 3. 環境変数の設定
@@ -415,29 +450,30 @@ USER_PASSWORD=your_password
 
 ```bash
 # マルチエージェントシステムの起動
-python src/langgraph-supervisor/cli/main.py
-
-# 対話モードで実行
-python src/langgraph-supervisor/cli/main.py --interactive
+python src/langgraph-supervisor/cli/supervisor_workers_multiagents.py
 
 # スクリプト実行
-python src/langgraph-supervisor/cli/main.py --script "明日の15時に会議を予定に入れて"
-
-# バッチ処理
-python src/langgraph-supervisor/cli/main.py --batch tasks.txt
+python -c "
+from src.langgraph-supervisor.cli.supervisor_workers_multiagents import app
+result = app.invoke({'messages': [{'role': 'user', 'content': '明日の15時に会議を予定に入れて'}]})
+print(result['messages'][-1]['content'])
+"
 ```
 
 ### 🌐 GUI インターフェース（マルチエージェント）
 
 ```bash
 # Streamlitアプリケーション起動
-streamlit run src/langgraph-supervisor/gui/app_integrated.py
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py
+
+# 英語版アプリケーション起動
+streamlit run src/langgraph-supervisor/gui/streamlit_app_en.py
 
 # ポート指定で起動
-streamlit run src/langgraph-supervisor/gui/app_integrated.py --server.port 8501
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py --server.port 8501
 
 # 外部アクセス許可で起動
-streamlit run src/langgraph-supervisor/gui/app_integrated.py --server.address 0.0.0.0
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py --server.address 0.0.0.0
 ```
 
 ### 🎯 Simple ReAct Agent
@@ -612,15 +648,7 @@ pip install -r requirements.txt
 pip install -r src/langgraph-supervisor/requirements.txt
 ```
 
-#### 3. MCPサーバー接続エラー
-
-```bash
-# エラー: MCP server files not found
-# 解決: 必要なMCPサーバーファイルを配置
-ls -la src/langgraph-supervisor/mcp_servers/mcp_server_*.py
-```
-
-#### 4. ポート競合エラー
+#### 3. ポート競合エラー
 
 ```bash
 # エラー: Port already in use

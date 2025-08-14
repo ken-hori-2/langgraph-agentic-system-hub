@@ -38,28 +38,50 @@ LangGraph Agentic System Hub provides a **LangGraph-based agentic architecture**
 - **🔄 Automatic Routing**: Supervisor automatically selects optimal agents
 - **🤖 Multi-Model Support**: OpenAI GPT-4o, Anthropic Claude-3 series support
 
-## 🎮 Demo
-
-### 🎥 Demo Video
+## 🎥 Demo Video
 
 <div align="center">
 
-<!-- Main video (MP4) - High quality version -->
-https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_en.mp4
-https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_ja.mp4
+**🎬 Multi-Agent System Demo**
 
-**🎬 Multi-Agent System Demo (High Quality Version)**
+> Due to video length constraints, we've split it into two videos, but the app can handle each use case without switching applications.  
+> The UI differs between English and Japanese versions for clarity and because it's still in development.
+
+*Watch how multiple specialized agents collaborate to perform music search, restaurant search, schedule management, and more.*
+
+---
+
+### 📹 Demo Video 1: Izakaya Search × Music Recommendation
+
+> **"Asking about izakaya and music tracks, where the supervisor distributes tasks to specialist agents and then generates a comprehensive response"**
+
+https://github.com/user-attachments/assets/90717585-5e53-492d-a558-035fe871605c
+
+*In this demo, when a user asks "Find a stylish izakaya in Shibuya and tell me about Mrs. GREEN APPLE songs", the Restaurant Agent, Music Agent, and others collaborate to generate a response.*
+
+---
+
+### 📹 Demo Video 2: Video Search × Weather Information
+
+> **"Asking about video content and weather, where the supervisor distributes tasks to specialist agents and generates responses"**
+
+https://github.com/user-attachments/assets/d4fe73d3-727b-487c-9826-a6a18e4b2a79
+
+*In this demo, when a user asks "Find English study video content and tell me tomorrow's weather", the Video Agent, Weather Agent, and others collaborate to generate a response.*
+
+---
+
+### 🎞️ Lightweight Demo (GIF)
 
 <!-- Lightweight version (GIF) - Compatibility focused -->
 ![Demo Animation](./src/langgraph-supervisor/assets/demo_en.gif)
 ![Demo Animation](./src/langgraph-supervisor/assets/demo_ja.gif)
 
-**🎬 Multi-Agent System Demo (Lightweight Version)**
+*Lightweight demo animations. Provided in GIF format for better browser compatibility.*
 
-*Watch how multiple specialized agents collaborate to perform music search, restaurant search, schedule management, and more.*
-
-<!-- Direct file reference -->
-![Demo Video](./src/langgraph-supervisor/assets/demo.mp4)
+<!-- Old video links (hidden) -->
+<!-- https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_en.mp4
+https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_ja.mp4 -->
 
 </div>
 
@@ -75,17 +97,17 @@ Experience the multi-agent system's web interface:
 # Navigate to GUI directory
 cd src/langgraph-supervisor/gui
 
-# Launch English version
-streamlit run streamlit_app_en.py
-
 # Launch Japanese version
 streamlit run streamlit_app.py
 
+# Launch English version
+streamlit run streamlit_app_en.py
+
 # Launch with specific port (e.g., 8501)
-streamlit run streamlit_app_en.py --server.port 8501
+streamlit run streamlit_app.py --server.port 8501
 
 # Launch with external access
-streamlit run streamlit_app_en.py --server.address 0.0.0.0
+streamlit run streamlit_app.py --server.address 0.0.0.0
 ```
 
 #### ✨ Main Features
@@ -156,23 +178,34 @@ langgraph-agentic-system-hub/
 │   │
 │   └── 📁 langgraph-supervisor/       # 🆕 Multi-Agent Supervisor
 │       ├── 📁 cli/                   # Command line interface
-│       │   ├── main.py               # Main execution file
+│       │   ├── README.md             # CLI usage guide
 │       │   ├── supervisor_workers_multiagents.py
-│       │   ├── example_usage.py
-│       │   └── workflow.png          # Workflow diagram
+│       │   ├── requirements.txt
+│       │   └── architecture.html     # Architecture diagram
 │       │
 │       ├── 📁 gui/                   # Graphical user interface
-│       │   ├── app_integrated.py     # Main GUI application
-│       │   ├── example_app_integrated.py
-│       │   └── requirements_app_integrated.txt
+│       │   ├── README.md             # GUI usage guide
+│       │   ├── streamlit_app.py      # Japanese version main application
+│       │   ├── streamlit_app_en.py   # English version main application
+│       │   ├── supervisor_workers_multiagents.py
+│       │   ├── requirements.txt
+│       │   ├── setup.sh              # macOS/Linux setup script
+│       │   └── setup.bat             # Windows setup script
 │       │
-│       ├── 📁 mcp_servers/           # MCP server implementation
-│       │   ├── mcp_server_spotify.py
-│       │   ├── mcp_server_hotpepper.py
-│       │   ├── mcp_server_googlemaps.py
-│       │   └── mcp_server_search.py
+│       ├── 📁 assets/                 # Asset files
+│       │   ├── demo_en.mp4           # English demo video
+│       │   ├── demo_ja.mp4           # Japanese demo video
+│       │   ├── demo_en.gif           # English demo GIF
+│       │   ├── demo_ja.gif           # Japanese demo GIF
+│       │   ├── demo.mp4              # Integrated demo video
+│       │   ├── demo.gif              # Integrated demo GIF
+│       │   ├── web_ja.png            # Japanese web app image
+│       │   ├── web_en.png            # English web app image
+│       │   ├── web_gui.png           # Web app image
+│       │   └── workflow.png          # Workflow diagram
 │       │
-│       └── README.md                 # Detailed documentation
+│       ├── README.md                 # Detailed documentation
+│       └── LICENSE                   # License file
 │
 ├── 📁 docs/
 │   └── architecture.png
@@ -289,10 +322,10 @@ python uv_api_client.py
 #### Usage Example
 ```bash
 # CLI interface
-python src/langgraph-supervisor/cli/main.py
+python src/langgraph-supervisor/cli/supervisor_workers_multiagents.py
 
 # GUI interface
-streamlit run src/langgraph-supervisor/gui/app_integrated.py
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py
 
 # Script execution
 python -c "
@@ -306,7 +339,7 @@ print(result['messages'][-1]['content'])
 
 ### Workflow Diagram
 
-![Multi-Agent Workflow](src/langgraph-supervisor/cli/workflow.png)
+![Multi-Agent Workflow](src/langgraph-supervisor/assets/workflow.png)
 
 ### Supervisor Role
 
@@ -349,7 +382,7 @@ pip install -r requirements.txt
 pip install -r src/langgraph-supervisor/requirements.txt
 
 # GUI dependencies
-pip install -r src/langgraph-supervisor/gui/requirements_app_integrated.txt
+pip install -r src/langgraph-supervisor/gui/requirements.txt
 ```
 
 ### 3. Environment Variables
@@ -415,29 +448,30 @@ USER_PASSWORD=your_password
 
 ```bash
 # Start multi-agent system
-python src/langgraph-supervisor/cli/main.py
-
-# Interactive mode
-python src/langgraph-supervisor/cli/main.py --interactive
+python src/langgraph-supervisor/cli/supervisor_workers_multiagents.py
 
 # Script execution
-python src/langgraph-supervisor/cli/main.py --script "Schedule a meeting for tomorrow at 3 PM"
-
-# Batch processing
-python src/langgraph-supervisor/cli/main.py --batch tasks.txt
+python -c "
+from src.langgraph-supervisor.cli.supervisor_workers_multiagents import app
+result = app.invoke({'messages': [{'role': 'user', 'content': 'Schedule a meeting for tomorrow at 3 PM'}]})
+print(result['messages'][-1]['content'])
+"
 ```
 
 ### 🌐 GUI Interface (Multi-Agent)
 
 ```bash
 # Start Streamlit application
-streamlit run src/langgraph-supervisor/gui/app_integrated.py
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py
+
+# Start English version application
+streamlit run src/langgraph-supervisor/gui/streamlit_app_en.py
 
 # Specify port
-streamlit run src/langgraph-supervisor/gui/app_integrated.py --server.port 8501
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py --server.port 8501
 
 # Allow external access
-streamlit run src/langgraph-supervisor/gui/app_integrated.py --server.address 0.0.0.0
+streamlit run src/langgraph-supervisor/gui/streamlit_app.py --server.address 0.0.0.0
 ```
 
 ### 🎯 Simple ReAct Agent
@@ -612,15 +646,7 @@ pip install -r requirements.txt
 pip install -r src/langgraph-supervisor/requirements.txt
 ```
 
-#### 3. MCP Server Connection Error
-
-```bash
-# Error: MCP server files not found
-# Solution: Place required MCP server files
-ls -la src/langgraph-supervisor/mcp_servers/mcp_server_*.py
-```
-
-#### 4. Port Conflict Error
+#### 3. Port Conflict Error
 
 ```bash
 # Error: Port already in use

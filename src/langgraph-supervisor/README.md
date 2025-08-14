@@ -1,5 +1,5 @@
 # 🧠 Agentic AI Multi-Agent Assistant
-> Powerd by LangGraph Multi-Agent Supervisor System
+> Powered by LangGraph Multi-Agent Supervisor System
 <!-- # 🤖 LangGraph Multi-Agent Supervisor System -->
 
 <div align="center">
@@ -125,7 +125,7 @@ https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervi
 
 以下の図は、マルチエージェントシステムの詳細なワークフローを示しています：
 
-![Multi-Agent Workflow](./cli/workflow.png)
+![Multi-Agent Workflow](./assets/workflow.png)
 
 **ワークフロー説明:**
 - **スーパーバイザー**: 中央の黄色いボックスで、全体のプロセスを調整
@@ -244,8 +244,8 @@ https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervi
 
 | インターフェース | 特徴 | 用途 | 実行方法 |
 |----------------|------|------|----------|
-| **CLI** | コマンドライン操作・スクリプト実行 | 自動化・バッチ処理 | `python cli/main.py` |
-| **GUI** | Webインターフェース・リアルタイム可視化 | 対話型操作・データ可視化 | `streamlit run gui/app_integrated.py` |
+| **CLI** | コマンドライン操作・スクリプト実行 | 自動化・バッチ処理 | `python cli/supervisor_workers_multiagents.py` |
+| **GUI** | Webインターフェース・リアルタイム可視化 | 対話型操作・データ可視化 | `streamlit run gui/streamlit_app.py` |
 | **MCP** | 動的ツール追加・プロトコル統合 | 拡張性・カスタマイズ | MCPサーバー起動 |
 
 </div>
@@ -280,7 +280,7 @@ Streamlit 1.28+ (GUI使用時)
 pip install -r requirements.txt
 
 # GUI使用時
-pip install -r requirements_app_integrated.txt
+pip install -r gui/requirements.txt
 ```
 
 ### 3️⃣ 環境変数の設定
@@ -320,55 +320,36 @@ USER_ID=admin
 USER_PASSWORD=password
 ```
 
-### 4️⃣ MCPサーバーファイルの配置（MCP使用時）
-
-```bash
-# 必要なMCPサーバーファイルを配置
-mcp_server_spotify.py
-mcp_server_hotpepper.py
-mcp_server_googlemaps.py
-mcp_server_search.py
-```
-
 ## 🎮 使用方法
 
-### 🖥️ CLI インターフェース（メイン実行方法）
+### 🖥️ CLI インターフェース
 
 ```bash
-# マルチエージェントシステムの起動
-python cli/main.py
+# マルチエージェントシステムの直接実行
+python cli/supervisor_workers_multiagents.py
 
-# 対話モードで実行
-python cli/main.py --interactive
-
-# スクリプト実行
-python cli/main.py --script "明日の15時に会議を予定に入れて"
-
-# バッチ処理
-python cli/main.py --batch tasks.txt
+# スクリプト実行例
+python -c "
+from cli.supervisor_workers_multiagents import app
+result = app.invoke({'messages': [{'role': 'user', 'content': '明日の15時に会議を予定に入れて'}]})
+print(result['messages'][-1]['content'])
+"
 ```
 
 ### 🌐 GUI インターフェース
 
 ```bash
 # Streamlitアプリケーション起動
-streamlit run gui/app_integrated.py
+streamlit run gui/streamlit_app.py
+
+# 英語版アプリケーション起動
+streamlit run gui/streamlit_app_en.py
 
 # ポート指定で起動
-streamlit run gui/app_integrated.py --server.port 8501
+streamlit run gui/streamlit_app.py --server.port 8501
 
 # 外部アクセス許可で起動
-streamlit run gui/app_integrated.py --server.address 0.0.0.0
-```
-
-### 🔧 MCP ツール統合
-
-```bash
-# MCPサーバーの起動
-python mcp_servers/mcp_server_spotify.py
-python mcp_servers/mcp_server_hotpepper.py
-python mcp_servers/mcp_server_googlemaps.py
-python mcp_servers/mcp_server_search.py
+streamlit run gui/streamlit_app.py --server.address 0.0.0.0
 ```
 
 ### 📝 使用例
@@ -396,46 +377,32 @@ print(result["messages"][-1]["content"])
 langgraph-supervisor/
 ├── 📁 cli/                    # コマンドラインインターフェース
 │   ├── README.md             # CLI使用ガイド
-│   ├── main.py               # メイン実行ファイル
 │   ├── supervisor_workers_multiagents.py
-│   ├── example_usage.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── architecture.html     # アーキテクチャ図
 │
 ├── 📁 gui/                    # グラフィカルユーザーインターフェース
 │   ├── README.md             # GUI使用ガイド
-│   ├── app_integrated.py     # メインGUIアプリケーション
-│   ├── example_app_integrated.py
-│   ├── requirements_app_integrated.txt
-│   └── config.json           # MCP設定ファイル
+│   ├── streamlit_app.py      # 日本語版メインアプリケーション
+│   ├── streamlit_app_en.py   # 英語版メインアプリケーション
+│   ├── supervisor_workers_multiagents.py
+│   ├── requirements.txt
+│   ├── setup.sh              # macOS/Linux用セットアップスクリプト
+│   └── setup.bat             # Windows用セットアップスクリプト
 │
-├── 📁 mcp_servers/            # MCPサーバー実装
-│   ├── mcp_server_spotify.py
-│   ├── mcp_server_hotpepper.py
-│   ├── mcp_server_googlemaps.py
-│   └── mcp_server_search.py
-│
-├── 📁 utils/                  # ユーティリティ
-│   ├── __init__.py
-│   └── helpers.py
-│
-├── 📁 docs/                   # ドキュメント
-│   ├── api_reference.md
-│   ├── deployment_guide.md
-│   └── troubleshooting.md
-│
-├── 📁 examples/               # 使用例
-│   ├── basic_usage.py
-│   ├── advanced_features.py
-│   └── custom_agents.py
-│
-├── 📁 tests/                  # テスト
-│   ├── test_cli.py
-│   ├── test_gui.py
-│   └── test_mcp.py
+├── 📁 assets/                 # アセットファイル
+│   ├── demo_en.mp4           # 英語版デモ動画
+│   ├── demo_ja.mp4           # 日本語版デモ動画
+│   ├── demo_en.gif           # 英語版デモGIF
+│   ├── demo_ja.gif           # 日本語版デモGIF
+│   ├── demo.mp4              # 統合デモ動画
+│   ├── demo.gif              # 統合デモGIF
+│   ├── web_ja.png            # 日本語版Webアプリ画像
+│   ├── web_en.png            # 英語版Webアプリ画像
+│   ├── web_gui.png           # Webアプリ画像
+│   └── workflow.png          # ワークフロー図
 │
 ├── README.md                  # このファイル
-├── requirements.txt           # 基本依存関係
-├── .env.example              # 環境変数テンプレート
 └── LICENSE                   # ライセンスファイル
 ```
 
@@ -549,7 +516,7 @@ echo "ANTHROPIC_API_KEY=your_key" >> .env
 # エラー: ModuleNotFoundError
 # 解決: 依存関係をインストール
 pip install -r requirements.txt
-pip install -r requirements_app_integrated.txt
+pip install -r gui/requirements.txt
 ```
 
 #### 3️⃣ MCPサーバー接続エラー
@@ -799,7 +766,7 @@ Streamlit 1.28+ (for GUI usage)
 pip install -r requirements.txt
 
 # For GUI usage
-pip install -r requirements_app_integrated.txt
+pip install -r gui/requirements.txt
 ```
 
 #### 3️⃣ Environment Variables
@@ -845,29 +812,29 @@ USER_PASSWORD=password
 
 ```bash
 # Start multi-agent system
-python cli/main.py
+python cli/supervisor_workers_multiagents.py
 
 # Run in interactive mode
-python cli/main.py --interactive
+python cli/supervisor_workers_multiagents.py --interactive
 
 # Script execution
-python cli/main.py --script "Schedule a meeting for tomorrow at 3 PM"
+python cli/supervisor_workers_multiagents.py --script "Schedule a meeting for tomorrow at 3 PM"
 
 # Batch processing
-python cli/main.py --batch tasks.txt
+python cli/supervisor_workers_multiagents.py --batch tasks.txt
 ```
 
 #### 🌐 GUI Interface
 
 ```bash
 # Start Streamlit application
-streamlit run gui/app_integrated.py
+streamlit run gui/streamlit_app.py
 
 # Start with port specification
-streamlit run gui/app_integrated.py --server.port 8501
+streamlit run gui/streamlit_app.py --server.port 8501
 
 # Start with external access permission
-streamlit run gui/app_integrated.py --server.address 0.0.0.0
+streamlit run gui/streamlit_app.py --server.address 0.0.0.0
 ```
 
 ### 🔧 Troubleshooting
