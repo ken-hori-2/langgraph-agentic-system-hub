@@ -38,28 +38,50 @@ LangGraph Agentic System Hub provides a **LangGraph-based agentic architecture**
 - **🔄 Automatic Routing**: Supervisor automatically selects optimal agents
 - **🤖 Multi-Model Support**: OpenAI GPT-4o, Anthropic Claude-3 series support
 
-## 🎮 Demo
-
-### 🎥 Demo Video
+## 🎥 Demo Video
 
 <div align="center">
 
-<!-- Main video (MP4) - High quality version -->
-https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_en.mp4
-https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_ja.mp4
+**🎬 Multi-Agent System Demo**
 
-**🎬 Multi-Agent System Demo (High Quality Version)**
+> Due to video length constraints, we've split it into two videos, but the app can handle each use case without switching applications.  
+> The UI differs between English and Japanese versions for clarity and because it's still in development.
+
+*Watch how multiple specialized agents collaborate to perform music search, restaurant search, schedule management, and more.*
+
+---
+
+### 📹 Demo Video 1: Izakaya Search × Music Recommendation
+
+> **"Asking about izakaya and music tracks, where the supervisor distributes tasks to specialist agents and then generates a comprehensive response"**
+
+https://github.com/user-attachments/assets/90717585-5e53-492d-a558-035fe871605c
+
+*In this demo, when a user asks "Find a stylish izakaya in Shibuya and tell me about Mrs. GREEN APPLE songs", the Restaurant Agent, Music Agent, and others collaborate to generate a response.*
+
+---
+
+### 📹 Demo Video 2: Video Search × Weather Information
+
+> **"Asking about video content and weather, where the supervisor distributes tasks to specialist agents and generates responses"**
+
+https://github.com/user-attachments/assets/d4fe73d3-727b-487c-9826-a6a18e4b2a79
+
+*In this demo, when a user asks "Find English study video content and tell me tomorrow's weather", the Video Agent, Weather Agent, and others collaborate to generate a response.*
+
+---
+
+### 🎞️ Lightweight Demo (GIF)
 
 <!-- Lightweight version (GIF) - Compatibility focused -->
 ![Demo Animation](./src/langgraph-supervisor/assets/demo_en.gif)
 ![Demo Animation](./src/langgraph-supervisor/assets/demo_ja.gif)
 
-**🎬 Multi-Agent System Demo (Lightweight Version)**
+*Lightweight demo animations. Provided in GIF format for better browser compatibility.*
 
-*Watch how multiple specialized agents collaborate to perform music search, restaurant search, schedule management, and more.*
-
-<!-- Direct file reference -->
-![Demo Video](./src/langgraph-supervisor/assets/demo.mp4)
+<!-- Old video links (hidden) -->
+<!-- https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_en.mp4
+https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_ja.mp4 -->
 
 </div>
 
@@ -159,7 +181,7 @@ langgraph-agentic-system-hub/
 │       │   ├── README.md             # CLI usage guide
 │       │   ├── supervisor_workers_multiagents.py
 │       │   ├── requirements.txt
-│       │   └── workflow.png          # Workflow diagram
+│       │   └── architecture.html     # Architecture diagram
 │       │
 │       ├── 📁 gui/                   # Graphical user interface
 │       │   ├── README.md             # GUI usage guide
@@ -167,18 +189,20 @@ langgraph-agentic-system-hub/
 │       │   ├── streamlit_app_en.py   # English version main application
 │       │   ├── supervisor_workers_multiagents.py
 │       │   ├── requirements.txt
-│       │   ├── workflow.png          # Workflow diagram
 │       │   ├── setup.sh              # macOS/Linux setup script
-│       │   ├── setup.bat             # Windows setup script
-│       │   └── .env                  # Environment variables
+│       │   └── setup.bat             # Windows setup script
 │       │
 │       ├── 📁 assets/                 # Asset files
 │       │   ├── demo_en.mp4           # English demo video
 │       │   ├── demo_ja.mp4           # Japanese demo video
 │       │   ├── demo_en.gif           # English demo GIF
 │       │   ├── demo_ja.gif           # Japanese demo GIF
+│       │   ├── demo.mp4              # Integrated demo video
+│       │   ├── demo.gif              # Integrated demo GIF
 │       │   ├── web_ja.png            # Japanese web app image
-│       │   └── web_en.png            # English web app image
+│       │   ├── web_en.png            # English web app image
+│       │   ├── web_gui.png           # Web app image
+│       │   └── workflow.png          # Workflow diagram
 │       │
 │       ├── README.md                 # Detailed documentation
 │       └── LICENSE                   # License file
@@ -315,7 +339,7 @@ print(result['messages'][-1]['content'])
 
 ### Workflow Diagram
 
-![Multi-Agent Workflow](src/langgraph-supervisor/cli/workflow.png)
+![Multi-Agent Workflow](src/langgraph-supervisor/assets/workflow.png)
 
 ### Supervisor Role
 
