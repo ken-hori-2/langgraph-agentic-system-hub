@@ -55,9 +55,11 @@ LangGraph Agentic System Hubは、**LangGraphベースのエージェントア�
 
 ### 📹 デモ動画1: 居酒屋検索 × 音楽推薦
 
-> **「居酒屋と楽曲について質問し、supervisorが各専門家agentにタスクを振り分けた後、回答をまとめて生成している」**
+![Multi-Agent Demo 1](src/langgraph-supervisor/assets/demo_ja.gif)
 
-https://github.com/user-attachments/assets/90717585-5e53-492d-a558-035fe871605c
+*居酒屋検索と音楽推薦のプレビュー - より詳しく見るには下のボタンをクリック*
+
+[![Multi-Agent Demo 1](https://img.shields.io/badge/🎬-デモ動画を見る-blue?style=for-the-badge&logo=youtube)](https://github.com/user-attachments/assets/90717585-5e53-492d-a558-035fe871605c)
 
 *このデモでは、ユーザーが「渋谷でオシャレな居酒屋を探して、ミセスの曲を教えて」と質問すると、Restaurant AgentやMusic Agent等と協調して回答を生成します。*
 
@@ -65,25 +67,27 @@ https://github.com/user-attachments/assets/90717585-5e53-492d-a558-035fe871605c
 
 ### 📹 デモ動画2: 動画検索 × 天気情報
 
-> **「動画コンテンツと天気について質問し、supervisorが各専門家agentにタスクを振り分けて回答を生成している」**
+![Multi-Agent Demo 2](src/langgraph-supervisor/assets/demo_en.gif)
 
-https://github.com/user-attachments/assets/d4fe73d3-727b-487c-9826-a6a18e4b2a79
+*動画検索と天気情報のプレビュー - より詳しく見るには下のボタンをクリック*
+
+[![Multi-Agent Demo 2](https://img.shields.io/badge/🎬-デモ動画を見る-blue?style=for-the-badge&logo=youtube)](https://github.com/user-attachments/assets/d4fe73d3-727b-487c-9826-a6a18e4b2a79)
 
 *このデモでは、ユーザーが「英語の勉強用の動画コンテンツを探して、明日の天気を教えて」と質問すると、Video AgentやWeather Agent等と協調して回答を生成します。*
 
 ---
 
-### 🎞️ 軽量版デモ（GIF）
+<!-- ### 🎞️ 統合システムデモ
 
-<!-- 軽量版（GIF）- 互換性重視 -->
-![Demo Animation](./src/langgraph-supervisor/assets/demo_en.gif)
-![Demo Animation](./src/langgraph-supervisor/assets/demo_ja.gif)
+![Full System Demo](src/langgraph-supervisor/assets/demo.gif)
 
-*軽量版のデモアニメーションです。ブラウザの互換性を重視したGIF形式で提供しています。*
+*統合システムのプレビュー - より詳しく見るには下のボタンをクリック*
 
-<!-- 古い動画リンク（非表示） -->
-<!-- https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_en.mp4
-https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_ja.mp4 -->
+[![Full System Demo](https://img.shields.io/badge/🎬-デモ動画を見る-blue?style=for-the-badge&logo=youtube)](src/langgraph-supervisor/assets/demo.mp4)
+
+*全機能を統合した包括的なデモンストレーションです。*
+
+--- -->
 
 </div>
 

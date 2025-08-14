@@ -24,22 +24,45 @@
 
 <div align="center">
 
-<!-- メイン動画（MP4）- 高品質版 -->
-https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_en.mp4
-https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_ja.mp4
+**🎬 GUIマルチエージェントシステムの動作デモ**
 
-**🎬 マルチエージェントシステムの動作デモ（高品質版）**
+*StreamlitベースのWebインターフェースでのマルチエージェントシステムの動作をご覧いただけます。*
 
-<!-- 軽量版（GIF）- 互換性重視 -->
-![Demo Animation](../assets/demo_en.gif)
-![Demo Animation](../assets/demo_ja.gif)
+---
 
-**🎬 マルチエージェントシステムの動作デモ（軽量版）**
+### 📹 デモ動画1: 居酒屋検索 × 音楽推薦
 
-*音楽検索、レストラン検索、スケジュール管理など、複数の専門エージェントが協調して動作する様子をご覧いただけます。*
+![GUI Demo 1](../assets/demo_ja.gif)
 
-<!-- 直接ファイル参照 -->
-![Demo Video](../assets/demo_en.mp4)
+*居酒屋検索と音楽推薦のプレビュー - より詳しく見るには下のボタンをクリック*
+
+[![GUI Demo 1](https://img.shields.io/badge/🎬-デモ動画を見る-blue?style=for-the-badge&logo=youtube)](../assets/demo_ja.mp4)
+
+*このデモでは、ユーザーが「渋谷でオシャレな居酒屋を探して、ミセスの曲を教えて」と質問すると、Restaurant AgentやMusic Agent等と協調して回答を生成します。*
+
+---
+
+### 📹 デモ動画2: 動画検索 × 天気情報
+
+![GUI Demo 2](../assets/demo_en.gif)
+
+*動画検索と天気情報のプレビュー - より詳しく見るには下のボタンをクリック*
+
+[![GUI Demo 2](https://img.shields.io/badge/🎬-デモ動画を見る-blue?style=for-the-badge&logo=youtube)](../assets/demo_en.mp4)
+
+*このデモでは、ユーザーが「英語の勉強用の動画コンテンツを探して、明日の天気を教えて」と質問すると、Video AgentやWeather Agent等と協調して回答を生成します。*
+
+<!-- ---
+
+### 🎞️ 統合システムデモ
+
+![Full System Demo](../assets/demo.gif)
+
+*統合システムのプレビュー - より詳しく見るには下のボタンをクリック*
+
+[![Full System Demo](https://img.shields.io/badge/🎬-デモ動画を見る-blue?style=for-the-badge&logo=youtube)](../assets/demo.mp4)
+
+*全機能を統合した包括的なデモンストレーションです。* -->
 
 </div>
 
