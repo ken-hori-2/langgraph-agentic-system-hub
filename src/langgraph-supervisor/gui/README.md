@@ -32,7 +32,7 @@
 
 ### 📹 デモ動画1: 居酒屋検索 × 音楽推薦
 
-![GUI Demo 1](../assets/demo_ja.gif)
+![GUI Demo 1](../assets/demo_en.gif)
 
 *居酒屋検索と音楽推薦のプレビュー - より詳しく見るには下のボタンをクリック*
 
@@ -44,7 +44,7 @@
 
 ### 📹 デモ動画2: 動画検索 × 天気情報
 
-![GUI Demo 2](../assets/demo_en.gif)
+![GUI Demo 2](../assets/demo_ja.gif)
 
 *動画検索と天気情報のプレビュー - より詳しく見るには下のボタンをクリック*
 

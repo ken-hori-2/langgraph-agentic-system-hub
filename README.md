@@ -55,7 +55,7 @@ LangGraph Agentic System Hubは、**LangGraphベースのエージェントア�
 
 ### 📹 デモ動画1: 居酒屋検索 × 音楽推薦
 
-![Multi-Agent Demo 1](src/langgraph-supervisor/assets/demo_ja.gif)
+![Multi-Agent Demo 1](src/langgraph-supervisor/assets/demo_en.gif)
 
 *居酒屋検索と音楽推薦のプレビュー - より詳しく見るには下のボタンをクリック*
 
@@ -67,7 +67,7 @@ LangGraph Agentic System Hubは、**LangGraphベースのエージェントア�
 
 ### 📹 デモ動画2: 動画検索 × 天気情報
 
-![Multi-Agent Demo 2](src/langgraph-supervisor/assets/demo_en.gif)
+![Multi-Agent Demo 2](src/langgraph-supervisor/assets/demo_ja.gif)
 
 *動画検索と天気情報のプレビュー - より詳しく見るには下のボタンをクリック*
 
