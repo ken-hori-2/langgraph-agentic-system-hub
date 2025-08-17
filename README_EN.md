@@ -53,9 +53,11 @@ LangGraph Agentic System Hub provides a **LangGraph-based agentic architecture**
 
 ### 📹 Demo Video 1: Izakaya Search × Music Recommendation
 
-> **"Asking about izakaya and music tracks, where the supervisor distributes tasks to specialist agents and then generates a comprehensive response"**
+![Multi-Agent Demo 1](src/langgraph-supervisor/assets/demo_en.gif)
 
-https://github.com/user-attachments/assets/90717585-5e53-492d-a558-035fe871605c
+*Izakaya search and music recommendation preview - Click the button below to see more details*
+
+[![Multi-Agent Demo 1](https://img.shields.io/badge/🎬-Watch_Demo_Video-blue?style=for-the-badge&logo=youtube)](https://github.com/user-attachments/assets/90717585-5e53-492d-a558-035fe871605c)
 
 *In this demo, when a user asks "Find a stylish izakaya in Shibuya and tell me about Mrs. GREEN APPLE songs", the Restaurant Agent, Music Agent, and others collaborate to generate a response.*
 
@@ -63,25 +65,27 @@ https://github.com/user-attachments/assets/90717585-5e53-492d-a558-035fe871605c
 
 ### 📹 Demo Video 2: Video Search × Weather Information
 
-> **"Asking about video content and weather, where the supervisor distributes tasks to specialist agents and generates responses"**
+![Multi-Agent Demo 2](src/langgraph-supervisor/assets/demo_ja.gif)
 
-https://github.com/user-attachments/assets/d4fe73d3-727b-487c-9826-a6a18e4b2a79
+*Video search and weather information preview - Click the button below to see more details*
+
+[![Multi-Agent Demo 2](https://img.shields.io/badge/🎬-Watch_Demo_Video-blue?style=for-the-badge&logo=youtube)](https://github.com/user-attachments/assets/d4fe73d3-727b-487c-9826-a6a18e4b2a79)
 
 *In this demo, when a user asks "Find English study video content and tell me tomorrow's weather", the Video Agent, Weather Agent, and others collaborate to generate a response.*
 
 ---
 
-### 🎞️ Lightweight Demo (GIF)
+<!-- ### 🎞️ Integrated System Demo
 
-<!-- Lightweight version (GIF) - Compatibility focused -->
-![Demo Animation](./src/langgraph-supervisor/assets/demo_en.gif)
-![Demo Animation](./src/langgraph-supervisor/assets/demo_ja.gif)
+![Full System Demo](src/langgraph-supervisor/assets/demo.gif)
 
-*Lightweight demo animations. Provided in GIF format for better browser compatibility.*
+*Integrated system preview - Click the button below to see more details*
 
-<!-- Old video links (hidden) -->
-<!-- https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_en.mp4
-https://github.com/ken-hori-2/langgraph-agentic-system-hub/src/langgraph-supervisor/assets/demo_ja.mp4 -->
+[![Full System Demo](https://img.shields.io/badge/🎬-Watch_Demo_Video-blue?style=for-the-badge&logo=youtube)](src/langgraph-supervisor/assets/demo.mp4)
+
+*Comprehensive demonstration integrating all features.*
+
+--- -->
 
 </div>
 
