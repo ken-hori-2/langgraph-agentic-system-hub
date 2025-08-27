@@ -63,6 +63,8 @@ LangGraph Agentic System Hubは、**LangGraphベースのエージェントア�
 
 *このデモでは、ユーザーが「渋谷でオシャレな居酒屋を探して、ミセスの曲を教えて」と質問すると、Restaurant AgentやMusic Agent等と協調して回答を生成します。*
 
+> **🔗 詳細情報**: [マルチエージェントスーパーバイザーシステムの詳細ドキュメント](src/langgraph-supervisor/README.md) でより詳しい情報をご確認いただけます。
+
 ---
 
 ### 📹 デモ動画2: 動画検索 × 天気情報
@@ -74,6 +76,38 @@ LangGraph Agentic System Hubは、**LangGraphベースのエージェントア�
 [![Multi-Agent Demo 2](https://img.shields.io/badge/🎬-デモ動画を見る-blue?style=for-the-badge&logo=youtube)](https://github.com/user-attachments/assets/d4fe73d3-727b-487c-9826-a6a18e4b2a79)
 
 *このデモでは、ユーザーが「英語の勉強用の動画コンテンツを探して、明日の天気を教えて」と質問すると、Video AgentやWeather Agent等と協調して回答を生成します。*
+
+> **🔗 詳細情報**: [マルチエージェントスーパーバイザーシステムの詳細ドキュメント](src/langgraph-supervisor/README.md) でより詳しい情報をご確認いただけます。
+
+---
+
+<div align="center">
+
+**🎬 シングルエージェントシステムの動作デモ**
+
+*単一のReActエージェントがMCPツールを動的に統合するシステムの動作をご覧いただけます。*
+
+---
+
+### 📹 デモ動画3: Single Agent × MCPツール動的統合システム
+
+![Single Agent MCP Integration Demo](src/streamlit-mcp-server-src/docs/demo.gif)
+
+*Single AgentによるMCPツール動的統合システムのプレビュー - より詳しく見るには下のボタンをクリック*
+
+[![Single Agent MCP Integration Demo](https://img.shields.io/badge/🎬-デモ動画を見る-blue?style=for-the-badge&logo=youtube)](https://github.com/user-attachments/assets/20b093a6-bd57-4b09-b8f0-e6987ac9d357)
+
+*このデモでは、単一のReActエージェントがMCPツールを動的に統合するシステムをご覧いただけます。JSON設定による簡単なツール追加と、プレビュー機能を備えた直感的なUIにより、検索結果が視覚的に分かりやすく表示されます。*
+
+> **🔗 詳細情報**: [MCPツール統合エージェントシステムの詳細ドキュメント](src/streamlit-mcp-server-src/README.md) でより詳しい情報をご確認いただけます。
+
+#### 🔄 デモ動画1,2との違い
+
+| 特徴 | デモ動画1,2（マルチエージェントスーパーバイザー） | デモ動画3（MCPツール統合エージェント） |
+|------|------------------------------------------------|--------------------------------------|
+| **アーキテクチャ** | 7つの専門エージェントが協調動作 | 単一のReActエージェントがMCPツールを使用 |
+| **タスク処理方式** | スーパーバイザーがタスクを分析・分割・振り分け | エージェントが自らツールを選択・実行 |
+| **拡張性** | 新しいエージェントの追加が必要 | JSON設定でツールを動的に追加可能 |
 
 ---
 
